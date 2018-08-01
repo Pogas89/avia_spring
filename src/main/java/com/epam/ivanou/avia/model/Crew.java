@@ -3,29 +3,21 @@ package com.epam.ivanou.avia.model;
 /**
  * JavaBean class of Crew entity
  */
-public class Crew {
-    private Integer id;
-
+public class Crew extends AbstractBaseEntity {
     private String name;
 
     private User user;
 
     public Crew(Integer id, String name, User user) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.user = user;
     }
 
     public Crew(String name, User user) {
-        this(null,name, user);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        super(null);
+        this.name = name;
+        this.user = user;
     }
 
     public String getName() {
@@ -44,7 +36,12 @@ public class Crew {
         this.user = user;
     }
 
-    public boolean isNew(){
-        return id==null;
+    @Override
+    public String toString() {
+        return "Crew{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

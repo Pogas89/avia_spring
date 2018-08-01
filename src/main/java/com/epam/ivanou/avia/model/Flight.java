@@ -6,9 +6,7 @@ import java.sql.Time;
 /**
  * JavaBean class of Flight entity
  */
-public class Flight {
-    private Integer id;
-
+public class Flight extends AbstractBaseEntity {
     private String name;
 
     private String departure;
@@ -23,8 +21,9 @@ public class Flight {
 
     private Crew crew;
 
-    public Flight(Integer id, String name, String departure, String destination, Date date, Time time, FlightStatus status, Crew crew) {
-        this.id = id;
+    public Flight(Integer id, String name, String departure, String destination,
+                  Date date, Time time, FlightStatus status, Crew crew) {
+        super(id);
         this.name = name;
         this.departure = departure;
         this.destination = destination;
@@ -34,16 +33,16 @@ public class Flight {
         this.crew = crew;
     }
 
-    public Flight(String name, String departure, String destination, Date date, Time time, FlightStatus status, Crew crew) {
-        this(null,name,departure,destination,date,time,status,crew);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public Flight(String name, String departure, String destination,
+                  Date date, Time time, FlightStatus status, Crew crew) {
+        super(null);
+        this.name = name;
+        this.departure = departure;
+        this.destination = destination;
+        this.date = date;
+        this.time = time;
+        this.status = status;
+        this.crew = crew;
     }
 
     public String getName() {
@@ -102,7 +101,17 @@ public class Flight {
         this.crew = crew;
     }
 
-    public boolean isNew(){
-        return id==null;
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", departure='" + departure + '\'' +
+                ", destination='" + destination + '\'' +
+                ", date=" + date +
+                ", time=" + time +
+                ", status=" + status +
+                ", crew=" + crew +
+                '}';
     }
 }
