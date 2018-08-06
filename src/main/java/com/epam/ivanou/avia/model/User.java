@@ -16,10 +16,23 @@ public class User extends AbstractBaseEntity {
 
     private String email;
 
-    private Set<Role> roles;
+    private Role roles;
+
+    public User(){
+    }
+
+    public User(User user){
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.roles = user.getRoles();
+    }
 
     public User(Integer id, String login, String password,
-                String firstName, String lastName, String email, Set<Role> roles) {
+                String firstName, String lastName, String email, Role roles) {
         super(id);
         this.login = login;
         this.password = password;
@@ -30,7 +43,7 @@ public class User extends AbstractBaseEntity {
     }
 
     public User(String login, String password, String firstName,
-                String lastName, String email, Set<Role> roles) {
+                String lastName, String email, Role roles) {
         super(null);
         this.login = login;
         this.password = password;
@@ -80,11 +93,11 @@ public class User extends AbstractBaseEntity {
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
+    public Role getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Role roles) {
         this.roles = roles;
     }
 
