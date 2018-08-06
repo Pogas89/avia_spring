@@ -25,10 +25,13 @@ public class UserServiceTest {
 
     @Test
     public void create() throws Exception {
+        User user = service.create(UserTestData.USER_TO_SAVE);
+        assertThat(UserTestData.USER_TO_SAVE).isEqualToIgnoringGivenFields(user,"id","roles");
     }
 
     @Test
     public void update() throws Exception {
+
     }
 
     @Test
@@ -37,7 +40,7 @@ public class UserServiceTest {
 
     @Test
     public void get() throws Exception {
-        User user = service.get(1);
+        User user = service.get(3);
         assertThat(UserTestData.USER).isEqualToIgnoringGivenFields(user,"roles");
     }
 
