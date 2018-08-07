@@ -66,8 +66,8 @@ public class JdbcUserRepository implements UserRepository {
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);
             user.setId(newKey.intValue());
         } else {
-            namedParameterJdbcTemplate.update("UPDATE user SET us_login=?, us_Fname=?, us_Lname=?," +
-                    " us_email=?, role_id=? WHERE user_id=?;", map);
+            namedParameterJdbcTemplate.update("UPDATE user SET us_login=:us_login, us_password=:us_password, us_Fname=:us_Fname, us_Lname=:us_Lname," +
+                    " us_email=:us_email, role_id=:role_id WHERE user_id=:user_id;", map);
         }
         return user;
     }

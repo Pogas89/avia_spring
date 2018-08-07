@@ -1,15 +1,15 @@
 DELETE FROM user;
-ALTER TABLE user AUTO_INCREMENT=0;
+ALTER TABLE user AUTO_INCREMENT=1000;
 DELETE FROM flight;
-ALTER TABLE flight AUTO_INCREMENT=0;
+ALTER TABLE flight AUTO_INCREMENT=1000;
 DELETE FROM staff;
-ALTER TABLE staff AUTO_INCREMENT=0;
+ALTER TABLE staff AUTO_INCREMENT=1000;
 DELETE FROM department;
-ALTER TABLE department AUTO_INCREMENT=0;
+ALTER TABLE department AUTO_INCREMENT=1000;
 DELETE FROM user_role;
-ALTER TABLE user_role AUTO_INCREMENT=0;
+ALTER TABLE user_role AUTO_INCREMENT=1000;
 DELETE FROM flight_status;
-ALTER TABLE flight_status AUTO_INCREMENT=0;
+ALTER TABLE flight_status AUTO_INCREMENT=1000;
 -- -----------------------------------------------------
 -- Test insert into user_status
 -- -----------------------------------------------------
