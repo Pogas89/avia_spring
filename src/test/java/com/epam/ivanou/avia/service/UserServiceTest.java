@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration({
@@ -26,12 +28,11 @@ public class UserServiceTest {
     @Test
     public void create() throws Exception {
         User user = service.create(UserTestData.USER_TO_SAVE);
-        assertThat(UserTestData.USER_TO_SAVE).isEqualToIgnoringGivenFields(user,"id","roles");
+        assertThat(user).isEqualToIgnoringGivenFields(UserTestData.USER_TO_SAVE,"id","roles");
     }
 
     @Test
     public void update() throws Exception {
-
     }
 
     @Test
@@ -41,7 +42,7 @@ public class UserServiceTest {
     @Test
     public void get() throws Exception {
         User user = service.get(3);
-        assertThat(UserTestData.USER).isEqualToIgnoringGivenFields(user,"roles");
+        assertThat(user).isEqualToIgnoringGivenFields(UserTestData.ADMIN,"roles");
     }
 
     @Test
@@ -50,6 +51,8 @@ public class UserServiceTest {
 
     @Test
     public void getAll() throws Exception {
+        List<User> users = service.getAll();
+        assertThat(users).
     }
 
 }
