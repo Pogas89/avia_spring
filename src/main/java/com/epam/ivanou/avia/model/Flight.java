@@ -24,6 +24,17 @@ public class Flight extends AbstractBaseEntity {
     public Flight() {
     }
 
+    public Flight(Flight flight) {
+        this.id = flight.getId();
+        this.name = flight.getName();
+        this.departure = flight.getDeparture();
+        this.destination = flight.getDestination();
+        this.date = flight.getDate();
+        this.time = flight.getTime();
+        this.status = flight.getStatus();
+        this.crew = flight.getCrew();
+    }
+
     public Flight(Integer id, String name, String departure, String destination,
                   Date date, Time time, FlightStatus status, Crew crew) {
         super(id);

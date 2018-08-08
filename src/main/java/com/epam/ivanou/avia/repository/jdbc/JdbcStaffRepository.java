@@ -81,6 +81,6 @@ public class JdbcStaffRepository implements StaffRepository {
 
     @Override
     public List<Staff> getAll() {
-        return jdbcTemplate.query("SELECT  * FROM staff",ROW_MAPPER);
+        return jdbcTemplate.query("SELECT  * FROM staff ORDER BY st_Lname, st_Fname",ROW_MAPPER);
     }
 }

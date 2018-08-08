@@ -11,6 +11,12 @@ public class Crew extends AbstractBaseEntity {
     public Crew() {
     }
 
+    public Crew(Crew crew) {
+        this.id = crew.getId();
+        this.name = crew.getName();
+        this.user = crew.getUser();
+    }
+
     public Crew(Integer id, String name, User user) {
         super(id);
         this.name = name;

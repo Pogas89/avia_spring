@@ -59,7 +59,7 @@ public class JdbcCrewRepository implements CrewRepository {
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);
             crew.setId(newKey.intValue());
         } else {
-            namedParameterJdbcTemplate.update("UPDATE  crew SET cr_id=:cr_id, cr_name=:cr_name, user_id=:user_id;",map);
+            namedParameterJdbcTemplate.update("UPDATE  crew SET cr_name=:cr_name, user_id=:user_id WHERE cr_id=:cr_id;",map);
         }
         return crew;
     }

@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `aviacompany`.`crew` (
   `cr_name` VARCHAR(45) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`cr_id`),
+  UNIQUE INDEX `name_UNIQUE` (`cr_name` ASC),
   INDEX `user_id_idx` (`user_id` ASC),
   CONSTRAINT `user_id`
   FOREIGN KEY (`user_id`)

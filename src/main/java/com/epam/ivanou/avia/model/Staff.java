@@ -13,6 +13,13 @@ public class Staff extends AbstractBaseEntity {
     public Staff() {
     }
 
+    public Staff(Staff staff) {
+        this.id = staff.getId();
+        this.firstName = staff.getFirstName();
+        this.lastName = staff.getLastName();
+        this.department = staff.getDepartment();
+    }
+
     public Staff(Integer id, String firstName, String lastName, Department department) {
         super(id);
         this.firstName = firstName;
