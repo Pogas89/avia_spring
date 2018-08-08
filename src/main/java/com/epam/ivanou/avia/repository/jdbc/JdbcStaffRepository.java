@@ -19,7 +19,7 @@ import java.util.List;
 
 @Repository
 public class JdbcStaffRepository implements StaffRepository {
-    public static final RowMapper<Staff> ROW_MAPPER = new RowMapper<Staff>() {
+    private static final RowMapper<Staff> ROW_MAPPER = new RowMapper<Staff>() {
         @Nullable
         @Override
         public Staff mapRow(ResultSet resultSet, int i) throws SQLException {

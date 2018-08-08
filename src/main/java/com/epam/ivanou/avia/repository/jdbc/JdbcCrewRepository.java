@@ -20,7 +20,7 @@ import java.util.List;
 
 @Repository
 public class JdbcCrewRepository implements CrewRepository {
-    public static final RowMapper<Crew> ROW_MAPPER = new RowMapper<Crew>() {
+    private static final RowMapper<Crew> ROW_MAPPER = new RowMapper<Crew>() {
         @Nullable
         @Override
         public Crew mapRow(ResultSet resultSet, int i) throws SQLException {

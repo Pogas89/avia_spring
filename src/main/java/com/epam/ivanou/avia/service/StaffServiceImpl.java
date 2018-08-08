@@ -4,9 +4,11 @@ import com.epam.ivanou.avia.model.Staff;
 import com.epam.ivanou.avia.repository.StaffRepository;
 import com.epam.ivanou.avia.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StaffServiceImpl implements StaffService {
 
     @Autowired

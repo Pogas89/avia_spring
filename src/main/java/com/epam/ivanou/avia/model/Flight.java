@@ -21,6 +21,9 @@ public class Flight extends AbstractBaseEntity {
 
     private Crew crew;
 
+    public Flight() {
+    }
+
     public Flight(Integer id, String name, String departure, String destination,
                   Date date, Time time, FlightStatus status, Crew crew) {
         super(id);

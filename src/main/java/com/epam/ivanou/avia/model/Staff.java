@@ -10,6 +10,9 @@ public class Staff extends AbstractBaseEntity {
 
     private Department department;
 
+    public Staff() {
+    }
+
     public Staff(Integer id, String firstName, String lastName, Department department) {
         super(id);
         this.firstName = firstName;
