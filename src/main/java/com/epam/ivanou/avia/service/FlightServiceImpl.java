@@ -1,6 +1,7 @@
 package com.epam.ivanou.avia.service;
 
 import com.epam.ivanou.avia.model.Flight;
+import com.epam.ivanou.avia.repository.CrewRepository;
 import com.epam.ivanou.avia.repository.FlightRepository;
 import com.epam.ivanou.avia.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,30 +13,41 @@ import java.util.List;
 public class FlightServiceImpl implements FlightService {
 
     @Autowired
-    private FlightRepository repository;
+    private FlightRepository flightRepository;
+
+    @Autowired
+    private CrewRepository crewRepository;
 
     @Override
     public Flight create(Flight flight) {
-        return repository.save(flight);
+        return flightRepository.save(flight);
     }
 
     @Override
     public void update(Flight flight) {
-        repository.save(flight);
+        flightRepository.save(flight);
     }
 
     @Override
     public void delete(int id) throws NotFoundException {
-        repository.delete(id);
+        flightRepository.delete(id);
     }
 
     @Override
     public Flight get(int id) throws NotFoundException {
-        return repository.get(id);
+        Flight flight = flightRepository.get(id);
+//        if (flight.getCrew() != null)
+//            flight.setCrew(crewRepository.get(flight.getCrew().getId()));
+        return flight;
     }
 
     @Override
     public List<Flight> getAll() {
-        return repository.getAll();
+        List<Flight> flightList = flightRepository.getAll();
+//        for (Flight flight : flightList) {
+//            if (flight.getCrew().getId() != null)
+//                flight.setCrew(crewRepository.get(flight.getCrew().getId()));
+//        }
+        return flightList;
     }
 }
