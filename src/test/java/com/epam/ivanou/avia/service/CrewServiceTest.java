@@ -23,6 +23,7 @@ import static com.epam.ivanou.avia.CrewTestData.*;
 @Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class CrewServiceTest {
 
+
     @Autowired
     private CrewService service;
 
