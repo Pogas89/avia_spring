@@ -19,7 +19,7 @@ public class Flight extends AbstractBaseEntity {
 
     private FlightStatus status;
 
-    private Crew crew;
+    private Integer crewId;
 
     public Flight() {
     }
@@ -32,11 +32,11 @@ public class Flight extends AbstractBaseEntity {
         this.date = flight.getDate();
         this.time = flight.getTime();
         this.status = flight.getStatus();
-        this.crew = flight.getCrew();
+        this.crewId = flight.getCrewId();
     }
 
     public Flight(Integer id, String name, String departure, String destination,
-                  Date date, Time time, FlightStatus status, Crew crew) {
+                  Date date, Time time, FlightStatus status, Integer crewId) {
         super(id);
         this.name = name;
         this.departure = departure;
@@ -44,11 +44,11 @@ public class Flight extends AbstractBaseEntity {
         this.date = date;
         this.time = time;
         this.status = status;
-        this.crew = crew;
+        this.crewId = crewId;
     }
 
     public Flight(String name, String departure, String destination,
-                  Date date, Time time, FlightStatus status, Crew crew) {
+                  Date date, Time time, FlightStatus status, Integer crewId) {
         super(null);
         this.name = name;
         this.departure = departure;
@@ -56,7 +56,7 @@ public class Flight extends AbstractBaseEntity {
         this.date = date;
         this.time = time;
         this.status = status;
-        this.crew = crew;
+        this.crewId = crewId;
     }
 
     public String getName() {
@@ -107,12 +107,12 @@ public class Flight extends AbstractBaseEntity {
         this.status = status;
     }
 
-    public Crew getCrew() {
-        return crew;
+    public Integer getCrewId() {
+        return crewId;
     }
 
-    public void setCrew(Crew crew) {
-        this.crew = crew;
+    public void setCrewId(Integer crewId) {
+        this.crewId = crewId;
     }
 
     @Override
@@ -125,7 +125,7 @@ public class Flight extends AbstractBaseEntity {
                 ", date=" + date +
                 ", time=" + time +
                 ", status=" + status +
-                ", crew=" + crew +
+                ", crewId=" + crewId +
                 '}';
     }
 }

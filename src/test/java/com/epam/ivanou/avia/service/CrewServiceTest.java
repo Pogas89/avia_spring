@@ -28,20 +28,20 @@ public class CrewServiceTest {
 
     @Test
     public void create() throws Exception {
-        Crew crew = service.create(new Crew("Crew3", UserTestData.ADMIN));
+        Crew crew = service.create(new Crew("Crew3", UserTestData.ADMIN.getId()));
         assertMatch(service.getAll(),CREW,CREW2,crew);
     }
 
     @Test(expected = DataAccessException.class)
     public void duplicateLogin() throws Exception {
-        service.create(new Crew(null,"Crew2", UserTestData.ADMIN));
+        service.create(new Crew(null,"Crew2", UserTestData.ADMIN.getId()));
     }
 
     @Test
     public void update() throws Exception {
         Crew update = new Crew(CREW);
         update.setName("asd");
-        update.setUser(UserTestData.USER);
+        update.setUserId(UserTestData.USER.getId());
         service.update(update);
         assertMatch(update,service.get(CREW_ID));
     }

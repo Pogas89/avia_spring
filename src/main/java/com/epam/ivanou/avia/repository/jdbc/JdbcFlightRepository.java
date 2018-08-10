@@ -33,8 +33,7 @@ public class JdbcFlightRepository implements FlightRepository {
                     resultSet.getDate(k++),
                     resultSet.getTime(k++),
                     FlightStatus.values()[resultSet.getInt(k++)],
-                    new Crew());
-            flight.getCrew().setId(resultSet.getInt(k));
+                    resultSet.getInt(k));
             return flight;
         }
     };
@@ -64,7 +63,7 @@ public class JdbcFlightRepository implements FlightRepository {
                 .addValue("fl_date", flight.getDate())
                 .addValue("fl_time", flight.getTime())
                 .addValue("fl_stat_id", flight.getStatus().ordinal())
-                .addValue("crew_id", flight.getCrew()== null ? null : flight.getCrew().getId());
+                .addValue("crew_id", flight.getCrewId());
 
         if (flight.isNew()) {
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);

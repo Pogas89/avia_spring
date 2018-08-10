@@ -27,8 +27,7 @@ public class JdbcCrewRepository implements CrewRepository {
             int k=1;
             Crew crew = new Crew(resultSet.getInt(k++),
                     resultSet.getString(k++),
-                    new User());
-            crew.getUser().setId(resultSet.getInt(k));
+                    resultSet.getInt(k));
             return crew;
         }
     };
@@ -53,7 +52,7 @@ public class JdbcCrewRepository implements CrewRepository {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("cr_id",crew.getId())
                 .addValue("cr_name", crew.getName())
-                .addValue("user_id", crew.getUser().getId());
+                .addValue("user_id", crew.getUserId());
 
         if (crew.isNew()){
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);

@@ -45,7 +45,7 @@ public class FlightServiceTest {
         newFlight.setDate(new Date(2010, 1, 3));
         newFlight.setTime(new Time(10, 10, 10));
         newFlight.setStatus(FlightStatus.CLOSED);
-        newFlight.setCrew(CrewTestData.CREW2);
+        newFlight.setCrewId(CrewTestData.CREW2.getId());
         service.update(newFlight);
         assertMatch(newFlight, service.get(FLIGHT1_ID));
     }

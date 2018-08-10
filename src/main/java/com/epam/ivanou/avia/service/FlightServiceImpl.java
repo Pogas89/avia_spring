@@ -36,18 +36,12 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Flight get(int id) throws NotFoundException {
         Flight flight = flightRepository.get(id);
-//        if (flight.getCrew() != null)
-//            flight.setCrew(crewRepository.get(flight.getCrew().getId()));
         return flight;
     }
 
     @Override
     public List<Flight> getAll() {
         List<Flight> flightList = flightRepository.getAll();
-//        for (Flight flight : flightList) {
-//            if (flight.getCrew().getId() != null)
-//                flight.setCrew(crewRepository.get(flight.getCrew().getId()));
-//        }
         return flightList;
     }
 }

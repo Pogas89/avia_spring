@@ -36,18 +36,11 @@ public class CrewServiceImpl implements CrewService {
 
     @Override
     public Crew get(int id) throws NotFoundException {
-
-        Crew crew = crewRepository.get(id);
-        crew.setUser(userRepository.get(crew.getUser().getId()));
-        return crew;
+        return crewRepository.get(id);
     }
 
     @Override
     public List<Crew> getAll() {
-        List<Crew> crewList = crewRepository.getAll();
-        for (Crew crew : crewList) {
-            crew.setUser(userRepository.get(crew.getUser().getId()));
-        }
-        return crewList;
+        return crewRepository.getAll();
     }
 }
