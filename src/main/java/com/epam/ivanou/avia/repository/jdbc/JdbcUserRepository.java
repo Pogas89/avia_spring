@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -20,6 +21,7 @@ import java.util.List;
 public class JdbcUserRepository implements UserRepository {
 
     private static final RowMapper<User> ROW_MAPPER = new RowMapper<User>() {
+        @Nullable
         @Override
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
             int k = 1;
