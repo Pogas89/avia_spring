@@ -41,7 +41,6 @@ public class UserServiceTest {
 
     @Test
     public void update() throws Exception {
-        //TODO need to fix
         User updated = new User(USER);
         updated.setEmail("asd@ya.ru");
         updated.setPassword("1111");

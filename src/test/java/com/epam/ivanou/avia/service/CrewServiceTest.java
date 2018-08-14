@@ -2,6 +2,7 @@ package com.epam.ivanou.avia.service;
 
 import com.epam.ivanou.avia.UserTestData;
 import com.epam.ivanou.avia.model.Crew;
+import com.epam.ivanou.avia.util.exception.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,13 @@ public class CrewServiceTest {
 
     @Test
     public void create() throws Exception {
-        Crew crew = service.create(new Crew(null,"Crew3", UserTestData.ADMIN.getId()));
+        Crew crew = service.create(new Crew(null,"Crew3", UserTestData.ADMIN));
         assertMatch(service.getAll(),CREW,CREW2,crew);
     }
 
     @Test(expected = DataAccessException.class)
     public void duplicateLogin() throws Exception {
-        service.create(new Crew(null,"Crew2", UserTestData.ADMIN.getId()));
+        service.create(new Crew(null,"Crew2", UserTestData.ADMIN));
     }
 
     @Test
@@ -53,7 +54,7 @@ public class CrewServiceTest {
         assertMatch(service.getAll(),CREW2);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = NotFoundException.class)
     public void getNotFound() throws Exception {
         service.get(0);
     }

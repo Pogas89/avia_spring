@@ -31,7 +31,7 @@ public class FlightServiceTest {
     @Test
     public void create() throws Exception {
         Flight flight = service.create(new Flight(null, "11111", "AAAA", "AAAA", LocalDateTime.of(2016, 10, 18,12, 12, 45), FlightStatus.OPENED, null));
-        assertMatch(service.getAll(), FLIGHT1, FLIGHT2, flight);
+        assertMatch(service.getAll(), FLIGHT1, flight, FLIGHT2);
     }
 
     @Test

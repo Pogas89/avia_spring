@@ -67,7 +67,7 @@ public class JdbcUserRepository implements UserRepository {
         } else {
             namedParameterJdbcTemplate.update("UPDATE user SET us_password=:us_password, us_Fname=:us_Fname, us_Lname=:us_Lname," +
                     " us_email=:us_email WHERE user_id=:user_id;", map);
-            jdbcTemplate.update("UPDATE role  SET user_id=?, role=?",user.getId(),user.getRole().toString());
+            jdbcTemplate.update("UPDATE role  SET  role=? WHERE user_id=?;",user.getRole().toString(), user.getId());
         }
         return user;
     }
@@ -79,17 +79,19 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public User get(int id) {
-        System.out.println();
-        return jdbcTemplate.queryForObject("SELECT user.user_id, us_email, us_password,us_Fname,us_Lname,role.role FROM user INNER JOIN role ON user.user_id = role.user_id WHERE user.user_id =?;", ROW_MAPPER, id);
+        return jdbcTemplate.queryForObject("SELECT user.user_id, us_email, us_password,us_Fname,us_Lname," +
+                "role.role FROM user INNER JOIN role ON user.user_id = role.user_id WHERE user.user_id =?;", ROW_MAPPER, id);
     }
 
     @Override
     public User getByLogin(String email) {
-        return jdbcTemplate.queryForObject("SELECT user.user_id, us_email, us_password,us_Fname,us_Lname,role.role FROM user INNER JOIN role ON user.user_id = role.user_id WHERE us_email =?;", ROW_MAPPER, email);
+        return jdbcTemplate.queryForObject("SELECT user.user_id, us_email, us_password,us_Fname,us_Lname," +
+                "role.role FROM user INNER JOIN role ON user.user_id = role.user_id WHERE us_email =?;", ROW_MAPPER, email);
     }
 
     @Override
     public List<User> getAll() {
-        return jdbcTemplate.query("SELECT user.user_id, us_email, us_password,us_Fname,us_Lname,role.role FROM user INNER JOIN role ON user.user_id = role.user_id ORDER BY us_email", ROW_MAPPER);
+        return jdbcTemplate.query("SELECT user.user_id, us_email, us_password,us_Fname,us_Lname," +
+                "role.role FROM user INNER JOIN role ON user.user_id = role.user_id ORDER BY us_email", ROW_MAPPER);
     }
 }

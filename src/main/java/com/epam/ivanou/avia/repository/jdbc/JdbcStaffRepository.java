@@ -27,7 +27,7 @@ public class JdbcStaffRepository implements StaffRepository {
             Staff staff = new Staff(resultSet.getInt(k++),
                     resultSet.getString(k++),
                     resultSet.getString(k++),
-                    Department.values()[resultSet.getInt(k)]);
+                    Department.valueOf(resultSet.getString(k++)));
             return staff;
         }
     };
@@ -52,14 +52,15 @@ public class JdbcStaffRepository implements StaffRepository {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("st_id",staff.getId())
                 .addValue("st_Fname",staff.getFirstName())
-                .addValue("st_Lname", staff.getLastName())
-                .addValue("dep_id", staff.getDepartment().ordinal());
+                .addValue("st_Lname", staff.getLastName());
         if (staff.isNew()){
-            Number numKey = simpleJdbcInsert.executeAndReturnKey(map);
+            Number numKey = simpleJdbcInsert.usingColumns("st_Fname","st_Lname").executeAndReturnKey(map);
             staff.setId(numKey.intValue());
+            jdbcTemplate.update("INSERT INTO department (st_id, dep_name) values (?,?)",staff.getId(),staff.getDepartment().toString());
         } else {
-            namedParameterJdbcTemplate.update("UPDATE staff SET st_Fname=:st_Fname, st_Lname=:st_Lname," +
-                    "dep_id=:dep_id WHERE st_id=:st_id;", map);
+            namedParameterJdbcTemplate.update("UPDATE staff SET st_Fname=:st_Fname, st_Lname=:st_Lname" +
+                    " WHERE st_id=:st_id;", map);
+            jdbcTemplate.update("UPDATE department set dep_name=? where department.st_id=?;",staff.getDepartment().toString(), staff.getId());
         }
         return staff;
     }
@@ -71,16 +72,19 @@ public class JdbcStaffRepository implements StaffRepository {
 
     @Override
     public Staff get(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM staff WHERE st_id=?;",ROW_MAPPER,id);
+        return jdbcTemplate.queryForObject("select staff.st_id,st_Fname,st_Lname, dep_name " +
+                "from staff inner join department d on staff.st_id = d.st_id where staff.st_id=?;",ROW_MAPPER,id);
     }
 
     @Override
     public Staff getByLastname(String lastname) {
-        return jdbcTemplate.queryForObject("SELECT  * FROM staff WHERE st_Lname=?;",ROW_MAPPER,lastname);
+        return jdbcTemplate.queryForObject("select staff.st_id,st_Fname,st_Lname, dep_name " +
+                "from staff inner join department d on staff.st_id = d.st_id where st_Lname=?;",ROW_MAPPER,lastname);
     }
 
     @Override
     public List<Staff> getAll() {
-        return jdbcTemplate.query("SELECT  * FROM staff ORDER BY st_Lname, st_Fname",ROW_MAPPER);
+        return jdbcTemplate.query("select staff.st_id,st_Fname,st_Lname, dep_name " +
+                "from staff inner join department d on staff.st_id = d.st_id ORDER BY st_Lname, st_Fname",ROW_MAPPER);
     }
 }

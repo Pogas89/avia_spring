@@ -31,8 +31,8 @@ public class JdbcFlightRepository implements FlightRepository {
                     resultSet.getString(k++),
                     resultSet.getString(k++),
                     resultSet.getTimestamp(k++).toLocalDateTime(),
-                    FlightStatus.values()[resultSet.getInt(k++)],
-                    resultSet.getInt(k));
+                    FlightStatus.valueOf(resultSet.getString(k++)),
+                    resultSet.getInt(k++));
             return flight;
         }
     };
@@ -61,15 +61,17 @@ public class JdbcFlightRepository implements FlightRepository {
                 .addValue("fl_destination", flight.getDestination())
                 .addValue("fl_datetime", flight.getDatetime())
                 .addValue("fl_stat_id", flight.getStatus().ordinal())
-                .addValue("crew_id", flight.getCrew().getId());
+                .addValue("crew_id", flight.getCrew()!=null?flight.getCrew().getId():null);
 
         if (flight.isNew()) {
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);
             flight.setId(newKey.intValue());
+            jdbcTemplate.update("INSERT INTO flight_status (fl_id, fl_status) VALUES (?,?)",flight.getId(),flight.getStatus().toString());
         } else {
             namedParameterJdbcTemplate.update("UPDATE flight SET fl_name=:fl_name," +
                     "fl_departure=:fl_departure, fl_destination=:fl_destination, fl_datetime=:fl_datetime," +
                     " crew_id=:crew_id WHERE fl_id=:fl_id;", map);
+            jdbcTemplate.update("UPDATE flight_status  SET  fl_status=? WHERE fl_id=?;",flight.getStatus().toString(), flight.getId());
         }
         return flight;
     }
@@ -81,11 +83,15 @@ public class JdbcFlightRepository implements FlightRepository {
 
     @Override
     public Flight get(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM flight WHERE fl_id=?;", ROW_MAPPER, id);
+        return jdbcTemplate.queryForObject("SELECT flight.fl_id, fl_name, fl_departure,fl_destination," +
+                "fl_datetime ,fl_status, crew_id FROM flight inner join flight_status f on " +
+                "flight.fl_id = f.fl_id WHERE flight.fl_id=?;", ROW_MAPPER, id);
     }
 
     @Override
     public List<Flight> getAll() {
-        return jdbcTemplate.query("SELECT * FROM flight ORDER BY fl_date,fl_time;", ROW_MAPPER);
+        return jdbcTemplate.query("SELECT flight.fl_id, fl_name, fl_departure,fl_destination," +
+                "fl_datetime, fl_status, crew_id FROM flight inner join flight_status f " +
+                "on flight.fl_id = f.fl_id ORDER BY fl_datetime;", ROW_MAPPER);
     }
 }

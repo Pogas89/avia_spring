@@ -34,7 +34,7 @@ public class Flight extends AbstractBaseEntity {
     }
 
     public Flight(Integer id, String name, String departure, String destination,
-                  LocalDateTime datetime, FlightStatus status, Integer crewId) {
+                  LocalDateTime datetime, FlightStatus status, Crew crew) {
         super(id);
         this.name = name;
         this.departure = departure;
