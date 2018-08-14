@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.epam.ivanou.avia.util.ValidationUtil.*;
+
 @Service
 public class StaffServiceImpl implements StaffService {
 
@@ -25,13 +27,13 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public void delete(Integer id) throws NotFoundException {
-        repository.delete(id);
+    public void delete(int id) throws NotFoundException {
+        checkNotFoundWithId(repository.delete(id),id);
     }
 
     @Override
     public Staff get(int id) throws NotFoundException {
-        return repository.get(id);
+        return checkNotFoundWithId(repository.get(id),id);
     }
 
     @Override

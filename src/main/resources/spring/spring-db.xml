@@ -9,6 +9,8 @@
 
     <context:property-placeholder location="classpath:db/mysql.properties" system-properties-mode="OVERRIDE"/>
 
+    <context:component-scan base-package="com.epam.ivanou.avia.repository"/>
+
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
         <jdbc:script location="db/init.sql"/>
         <jdbc:script location="db/populateDb.sql"/>

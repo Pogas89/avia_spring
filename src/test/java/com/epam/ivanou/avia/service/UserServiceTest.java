@@ -2,6 +2,7 @@ package com.epam.ivanou.avia.service;
 
 import com.epam.ivanou.avia.model.Role;
 import com.epam.ivanou.avia.model.User;
+import com.epam.ivanou.avia.util.exception.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,31 +29,38 @@ public class UserServiceTest {
 
     @Test
     public void create() throws Exception {
-        User newUser = new User(null, "newUser", "newUser", "newUser", "newUser", "newUser@gmail.com", Role.values()[0]);
+        User newUser = new User(null,  "newUser@gmail.com","newUser", "newUser", "newUser", Role.ROLE_ADMIN);
         service.create(newUser);
         assertMatch(service.getAll(), ADMIN,newUser,USER);
     }
 
     @Test(expected = DataAccessException.class)
     public void duplicateLogin() throws Exception {
-        service.create(new User(null, "admin", "newUser", "newUser", "newUser", "newUser@gmail.com", Role.values()[0]));
+        service.create(new User(null,  "admin@gmail.com", "newUser", "newUser", "newUser", Role.ROLE_ADMIN));
     }
 
     @Test
     public void update() throws Exception {
+        //TODO need to fix
         User updated = new User(USER);
         updated.setEmail("asd@ya.ru");
-        updated.setLogin("asdf");
         updated.setPassword("1111");
         updated.setFirstName("adac");
         updated.setLastName("dacas");
         service.update(updated);
-        assertMatch(updated, service.get(USER_ID));
+        User need = service.get(USER_ID);
+        assertMatch(updated, need);
     }
 
     @Test
     public void delete() throws Exception {
         service.delete(USER_ID);
+        assertMatch(service.getAll(),ADMIN);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void deleteNotFound() throws Exception {
+        service.delete(1);
         assertMatch(service.getAll(),ADMIN);
     }
 
@@ -62,15 +70,20 @@ public class UserServiceTest {
         assertMatch(user,ADMIN);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = NotFoundException.class)
     public void getNotFound() throws Exception {
        service.get(0);
     }
 
     @Test
     public void getByLogin() throws Exception {
-        User user = service.getByLogin("admin");
+        User user = service.getByLogin(ADMIN.getEmail());
         assertMatch(user,ADMIN);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getNotFoundByLogin() throws Exception {
+        service.getByLogin("empty");
     }
 
     @Test

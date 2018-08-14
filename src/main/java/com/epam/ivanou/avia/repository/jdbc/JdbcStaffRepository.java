@@ -54,7 +54,7 @@ public class JdbcStaffRepository implements StaffRepository {
                 .addValue("st_Fname",staff.getFirstName())
                 .addValue("st_Lname", staff.getLastName())
                 .addValue("dep_id", staff.getDepartment().ordinal());
-        if (staff.getId()==null){
+        if (staff.isNew()){
             Number numKey = simpleJdbcInsert.executeAndReturnKey(map);
             staff.setId(numKey.intValue());
         } else {

@@ -2,6 +2,7 @@ package com.epam.ivanou.avia.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 
 /**
  * JavaBean class of Flight entity
@@ -13,13 +14,11 @@ public class Flight extends AbstractBaseEntity {
 
     private String destination;
 
-    private Date date;
-
-    private Time time;
+    private LocalDateTime datetime;
 
     private FlightStatus status;
 
-    private Integer crewId;
+    private Crew crew;
 
     public Flight() {
     }
@@ -29,34 +28,20 @@ public class Flight extends AbstractBaseEntity {
         this.name = flight.getName();
         this.departure = flight.getDeparture();
         this.destination = flight.getDestination();
-        this.date = flight.getDate();
-        this.time = flight.getTime();
+        this.datetime = datetime;
         this.status = flight.getStatus();
-        this.crewId = flight.getCrewId();
+        this.crew = flight.getCrew();
     }
 
     public Flight(Integer id, String name, String departure, String destination,
-                  Date date, Time time, FlightStatus status, Integer crewId) {
+                  LocalDateTime datetime, FlightStatus status, Integer crewId) {
         super(id);
         this.name = name;
         this.departure = departure;
         this.destination = destination;
-        this.date = date;
-        this.time = time;
+        this.datetime = datetime;
         this.status = status;
-        this.crewId = crewId;
-    }
-
-    public Flight(String name, String departure, String destination,
-                  Date date, Time time, FlightStatus status, Integer crewId) {
-        super(null);
-        this.name = name;
-        this.departure = departure;
-        this.destination = destination;
-        this.date = date;
-        this.time = time;
-        this.status = status;
-        this.crewId = crewId;
+        this.crew = crew;
     }
 
     public String getName() {
@@ -83,20 +68,12 @@ public class Flight extends AbstractBaseEntity {
         this.destination = destination;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getDatetime() {
+        return datetime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
+    public void setDatetime(LocalDateTime datetime) {
+        this.datetime = datetime;
     }
 
     public FlightStatus getStatus() {
@@ -107,12 +84,12 @@ public class Flight extends AbstractBaseEntity {
         this.status = status;
     }
 
-    public Integer getCrewId() {
-        return crewId;
+    public Crew getCrew() {
+        return crew;
     }
 
-    public void setCrewId(Integer crewId) {
-        this.crewId = crewId;
+    public void setCrew(Crew crew) {
+        this.crew = crew;
     }
 
     @Override
@@ -122,10 +99,9 @@ public class Flight extends AbstractBaseEntity {
                 ", name='" + name + '\'' +
                 ", departure='" + departure + '\'' +
                 ", destination='" + destination + '\'' +
-                ", date=" + date +
-                ", time=" + time +
+                ", datetime=" + datetime +
                 ", status=" + status +
-                ", crewId=" + crewId +
+                ", crew=" + crew +
                 '}';
     }
 }

@@ -30,8 +30,7 @@ public class JdbcFlightRepository implements FlightRepository {
                     resultSet.getString(k++),
                     resultSet.getString(k++),
                     resultSet.getString(k++),
-                    resultSet.getDate(k++),
-                    resultSet.getTime(k++),
+                    resultSet.getTimestamp(k++).toLocalDateTime(),
                     FlightStatus.values()[resultSet.getInt(k++)],
                     resultSet.getInt(k));
             return flight;
@@ -60,18 +59,17 @@ public class JdbcFlightRepository implements FlightRepository {
                 .addValue("fl_name", flight.getName())
                 .addValue("fl_departure", flight.getDeparture())
                 .addValue("fl_destination", flight.getDestination())
-                .addValue("fl_date", flight.getDate())
-                .addValue("fl_time", flight.getTime())
+                .addValue("fl_datetime", flight.getDatetime())
                 .addValue("fl_stat_id", flight.getStatus().ordinal())
-                .addValue("crew_id", flight.getCrewId());
+                .addValue("crew_id", flight.getCrew().getId());
 
         if (flight.isNew()) {
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);
             flight.setId(newKey.intValue());
         } else {
             namedParameterJdbcTemplate.update("UPDATE flight SET fl_name=:fl_name," +
-                    "fl_departure=:fl_departure, fl_destination=:fl_destination, fl_date=:fl_date," +
-                    "fl_time=:fl_time, fl_stat_id=:fl_stat_id, crew_id=:crew_id WHERE fl_id=:fl_id;", map);
+                    "fl_departure=:fl_departure, fl_destination=:fl_destination, fl_datetime=:fl_datetime," +
+                    " crew_id=:crew_id WHERE fl_id=:fl_id;", map);
         }
         return flight;
     }

@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.epam.ivanou.avia.util.ValidationUtil.*;
+
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
@@ -26,17 +28,17 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void delete(int id) throws NotFoundException {
-        repository.delete(id);
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     @Override
     public User get(int id) throws NotFoundException {
-        return repository.get(id);
+        return checkNotFoundWithId(repository.get(id), id);
     }
 
     @Override
     public User getByLogin(String login) throws NotFoundException {
-        return repository.getByLogin(login);
+        return checkNotFound(repository.getByLogin(login), login);
     }
 
     @Override

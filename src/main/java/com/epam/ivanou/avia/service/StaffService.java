@@ -10,7 +10,7 @@ public interface StaffService {
 
     void update(Staff staff);
 
-    void delete(Integer id) throws NotFoundException;
+    void delete(int id) throws NotFoundException;
 
     Staff get(int id) throws NotFoundException;
 

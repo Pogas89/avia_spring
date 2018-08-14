@@ -11,8 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.epam.ivanou.avia.FlightTestData.*;
@@ -31,8 +30,7 @@ public class FlightServiceTest {
 
     @Test
     public void create() throws Exception {
-        Flight flight = service.create(new Flight(null, "11111", "AAAA", "AAAA", new Date(2016, 10, 18),
-                new Time(12, 12, 45), FlightStatus.values()[0], null));
+        Flight flight = service.create(new Flight(null, "11111", "AAAA", "AAAA", LocalDateTime.of(2016, 10, 18,12, 12, 45), FlightStatus.OPENED, null));
         assertMatch(service.getAll(), FLIGHT1, FLIGHT2, flight);
     }
 
@@ -42,10 +40,9 @@ public class FlightServiceTest {
         newFlight.setDeparture("Asdasd");
         newFlight.setDestination("sadsAsdasd");
         newFlight.setName("1dasda1");
-        newFlight.setDate(new Date(2010, 1, 3));
-        newFlight.setTime(new Time(10, 10, 10));
+        newFlight.setDatetime(LocalDateTime.of(2010, 1, 3,10, 10, 10));
         newFlight.setStatus(FlightStatus.CLOSED);
-        newFlight.setCrewId(CrewTestData.CREW2.getId());
+        newFlight.setCrew(CrewTestData.CREW2);
         service.update(newFlight);
         assertMatch(newFlight, service.get(FLIGHT1_ID));
     }

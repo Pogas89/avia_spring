@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.epam.ivanou.avia.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 public class FlightServiceImpl implements FlightService {
 
@@ -30,13 +32,12 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-        flightRepository.delete(id);
+        checkNotFoundWithId(flightRepository.delete(id),id);
     }
 
     @Override
     public Flight get(int id) throws NotFoundException {
-        Flight flight = flightRepository.get(id);
-        return flight;
+        return checkNotFoundWithId(flightRepository.get(id),id);
     }
 
     @Override

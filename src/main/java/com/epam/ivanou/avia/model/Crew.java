@@ -6,7 +6,7 @@ package com.epam.ivanou.avia.model;
 public class Crew extends AbstractBaseEntity {
     private String name;
 
-    private Integer userId;
+    private User user;
 
     public Crew() {
     }
@@ -14,20 +14,15 @@ public class Crew extends AbstractBaseEntity {
     public Crew(Crew crew) {
         this.id = crew.getId();
         this.name = crew.getName();
-        this.userId = crew.getUserId();
+        this.user = crew.getUser();
     }
 
     public Crew(Integer id, String name, Integer userId) {
         super(id);
         this.name = name;
-        this.userId = userId;
+        this.user = user;
     }
 
-    public Crew(String name, Integer userId) {
-        super(null);
-        this.name = name;
-        this.userId = userId;
-    }
 
     public String getName() {
         return name;
@@ -37,12 +32,12 @@ public class Crew extends AbstractBaseEntity {
         this.name = name;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -50,7 +45,7 @@ public class Crew extends AbstractBaseEntity {
         return "Crew{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", userId=" + userId +
+                ", user=" + user +
                 '}';
     }
 }

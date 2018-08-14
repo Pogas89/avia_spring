@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.epam.ivanou.avia.util.ValidationUtil.*;
+
 @Service
 public class CrewServiceImpl implements CrewService {
 
@@ -31,12 +33,12 @@ public class CrewServiceImpl implements CrewService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-        crewRepository.delete(id);
+        checkNotFoundWithId(crewRepository.delete(id),id);
     }
 
     @Override
     public Crew get(int id) throws NotFoundException {
-        return crewRepository.get(id);
+        return checkNotFoundWithId(crewRepository.get(id),id);
     }
 
     @Override

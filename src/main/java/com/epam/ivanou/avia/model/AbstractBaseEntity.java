@@ -1,6 +1,12 @@
 package com.epam.ivanou.avia.model;
 
+import javax.persistence.*;
+
+@MappedSuperclass
+@Access(AccessType.FIELD)
 public abstract class AbstractBaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     public AbstractBaseEntity() {

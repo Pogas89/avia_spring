@@ -52,7 +52,7 @@ public class JdbcCrewRepository implements CrewRepository {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("cr_id",crew.getId())
                 .addValue("cr_name", crew.getName())
-                .addValue("user_id", crew.getUserId());
+                .addValue("user_id", crew.getUser().getId());
 
         if (crew.isNew()){
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);

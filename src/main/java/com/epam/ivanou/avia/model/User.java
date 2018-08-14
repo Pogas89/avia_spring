@@ -1,64 +1,52 @@
 package com.epam.ivanou.avia.model;
 
-import java.util.Set;
+import javax.persistence.*;
 
 /**
  * JavaBean class of User entity
  */
+@Entity
+@Table(name = "user")
 public class User extends AbstractBaseEntity {
-    private String login;
 
-    private String password;
-
-    private String firstName;
-
-    private String lastName;
-
+    @Column(name = "us_email", nullable = false)
     private String email;
 
-    private Role roles;
+    @Column(name = "us_password", nullable = false)
+    private String password;
+
+    @Column(name = "us_Fname", nullable = false)
+    private String firstName;
+
+    @Column(name = "us_Lname", nullable = false)
+    private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "user_id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Role role;
 
     public User(){
     }
 
     public User(User user){
         this.id = user.getId();
-        this.login = user.getLogin();
+        this.email = user.getEmail();
         this.password = user.getPassword();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.email = user.getEmail();
-        this.roles = user.getRoles();
+        this.role = user.getRole();
     }
 
-    public User(Integer id, String login, String password,
-                String firstName, String lastName, String email, Role roles) {
+    public User(Integer id, String email, String password,
+                String firstName, String lastName,Role role) {
         super(id);
-        this.login = login;
+        this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.roles = roles;
-    }
-
-    public User(String login, String password, String firstName,
-                String lastName, String email, Role roles) {
-        super(null);
-        this.login = login;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.roles = roles;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
+        this.role=role;
     }
 
     public String getPassword() {
@@ -93,24 +81,23 @@ public class User extends AbstractBaseEntity {
         this.email = email;
     }
 
-    public Role getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Role roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
+                ", role=" + role +
                 '}';
     }
 }

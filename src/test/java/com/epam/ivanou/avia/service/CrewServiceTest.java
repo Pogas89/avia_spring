@@ -29,7 +29,7 @@ public class CrewServiceTest {
 
     @Test
     public void create() throws Exception {
-        Crew crew = service.create(new Crew("Crew3", UserTestData.ADMIN.getId()));
+        Crew crew = service.create(new Crew(null,"Crew3", UserTestData.ADMIN.getId()));
         assertMatch(service.getAll(),CREW,CREW2,crew);
     }
 
@@ -42,7 +42,7 @@ public class CrewServiceTest {
     public void update() throws Exception {
         Crew update = new Crew(CREW);
         update.setName("asd");
-        update.setUserId(UserTestData.USER.getId());
+        update.setUser(UserTestData.USER);
         service.update(update);
         assertMatch(update,service.get(CREW_ID));
     }
