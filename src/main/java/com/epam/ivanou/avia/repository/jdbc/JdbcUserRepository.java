@@ -84,7 +84,7 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public User getByLogin(String email) {
+    public User getByEmail(String email) {
         return jdbcTemplate.queryForObject("SELECT user.user_id, us_email, us_password,us_Fname,us_Lname," +
                 "role.role FROM user INNER JOIN role ON user.user_id = role.user_id WHERE us_email =?;", ROW_MAPPER, email);
     }

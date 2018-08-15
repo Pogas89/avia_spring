@@ -9,8 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CrewTestData {
     public static Integer CREW_ID = 1000;
     public static Integer CREW2_ID = 1001;
-    public static Crew CREW = new Crew(CREW_ID, "Crew1", UserTestData.ADMIN.getId());
-    public static Crew CREW2 = new Crew(CREW2_ID, "Crew2", UserTestData.ADMIN.getId());
+    public static Crew CREW = new Crew(CREW_ID, "Crew1", UserTestData.ADMIN);
+    public static Crew CREW2 = new Crew(CREW2_ID, "Crew2", UserTestData.ADMIN);
 
     public static void assertMatch(Crew actual, Crew expected) {
         assertThat(actual).isEqualTo(expected);

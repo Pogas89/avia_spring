@@ -1,11 +1,19 @@
 package com.epam.ivanou.avia.model;
 
+import javax.persistence.*;
+
 /**
  * JavaBean class of Crew entity
  */
+@Entity
+@Table(name = "crew")
 public class Crew extends AbstractBaseEntity {
+
+    @Column(name = "cr_name", nullable = false)
     private String name;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Crew() {
@@ -38,6 +46,23 @@ public class Crew extends AbstractBaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Crew)) return false;
+
+        Crew crew = (Crew) o;
+
+        return getName().equals(crew.getName()) && getUser().equals(crew.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getUser().hashCode();
+        return result;
     }
 
     @Override

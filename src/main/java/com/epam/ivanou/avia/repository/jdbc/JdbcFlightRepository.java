@@ -32,7 +32,8 @@ public class JdbcFlightRepository implements FlightRepository {
                     resultSet.getString(k++),
                     resultSet.getTimestamp(k++).toLocalDateTime(),
                     FlightStatus.valueOf(resultSet.getString(k++)),
-                    resultSet.getInt(k++));
+                    new Crew());
+                    flight.getCrew().setId(resultSet.getInt(k++));
             return flight;
         }
     };

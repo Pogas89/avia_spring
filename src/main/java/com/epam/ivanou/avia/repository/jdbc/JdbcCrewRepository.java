@@ -24,10 +24,11 @@ public class JdbcCrewRepository implements CrewRepository {
         @Nullable
         @Override
         public Crew mapRow(ResultSet resultSet, int i) throws SQLException {
-            int k=1;
+            int k = 1;
             Crew crew = new Crew(resultSet.getInt(k++),
                     resultSet.getString(k++),
-                    resultSet.getInt(k));
+                    new User());
+            crew.getUser().setId(resultSet.getInt(k));
             return crew;
         }
     };
@@ -50,31 +51,31 @@ public class JdbcCrewRepository implements CrewRepository {
     @Override
     public Crew save(Crew crew) {
         MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("cr_id",crew.getId())
+                .addValue("cr_id", crew.getId())
                 .addValue("cr_name", crew.getName())
                 .addValue("user_id", crew.getUser().getId());
 
-        if (crew.isNew()){
+        if (crew.isNew()) {
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);
             crew.setId(newKey.intValue());
         } else {
-            namedParameterJdbcTemplate.update("UPDATE  crew SET cr_name=:cr_name, user_id=:user_id WHERE cr_id=:cr_id;",map);
+            namedParameterJdbcTemplate.update("UPDATE  crew SET cr_name=:cr_name, user_id=:user_id WHERE cr_id=:cr_id;", map);
         }
         return crew;
     }
 
     @Override
     public boolean delete(int id) {
-        return jdbcTemplate.update("DELETE FROM crew WHERE cr_id=?;",id)!=0;
+        return jdbcTemplate.update("DELETE FROM crew WHERE cr_id=?;", id) != 0;
     }
 
     @Override
     public Crew get(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM crew WHERE cr_id=?;", ROW_MAPPER,id);
+        return jdbcTemplate.queryForObject("SELECT * FROM crew WHERE cr_id=?;", ROW_MAPPER, id);
     }
 
     @Override
     public List<Crew> getAll() {
-        return jdbcTemplate.query("SELECT * FROM crew ORDER BY cr_name",ROW_MAPPER);
+        return jdbcTemplate.query("SELECT * FROM crew ORDER BY cr_name", ROW_MAPPER);
     }
 }

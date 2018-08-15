@@ -32,21 +32,4 @@ public abstract class AbstractBaseEntity {
     public String toString() {
         return String.format("Entity %s (%s)", getClass().getName(), id);
     }
-
-    @Override
-    public int hashCode() {
-        return id == null ? 0 : id;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()){
-            return false;
-        }
-        AbstractBaseEntity that = (AbstractBaseEntity) obj;
-        return id != null && id.equals(that.id);
-    }
 }

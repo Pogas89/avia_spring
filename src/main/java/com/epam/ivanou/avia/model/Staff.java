@@ -1,13 +1,24 @@
 package com.epam.ivanou.avia.model;
 
+import javax.persistence.*;
+
 /**
  * JavaBean class of Staff entity
  */
+@Entity
+@Table(name = "staff")
 public class Staff extends AbstractBaseEntity {
+
+    @Column(name = "st_Fname", nullable = false)
     private String firstName;
 
+    @Column(name = "st_Lname", nullable = false)
     private String lastName;
 
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "department", joinColumns = @JoinColumn(name = "st_id"))
+    @Column(name = "st_id")
+//    @ElementCollection(fetch = FetchType.EAGER)
     private Department department;
 
     public Staff() {
@@ -56,6 +67,25 @@ public class Staff extends AbstractBaseEntity {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Staff)) return false;
+
+        Staff staff = (Staff) o;
+
+        return getFirstName().equals(staff.getFirstName()) && getLastName().equals(staff.getLastName())
+                && getDepartment() == staff.getDepartment();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + getDepartment().hashCode();
+        return result;
     }
 
     @Override

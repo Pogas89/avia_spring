@@ -1,23 +1,35 @@
 package com.epam.ivanou.avia.model;
 
-import java.sql.Date;
-import java.sql.Time;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * JavaBean class of Flight entity
  */
+@Entity
+@Table(name = "flight")
 public class Flight extends AbstractBaseEntity {
+
+    @Column(name = "fl_name", nullable = false)
     private String name;
 
+    @Column(name = "fl_departure", nullable = false)
     private String departure;
 
+    @Column(name = "fl_destination", nullable = false)
     private String destination;
 
+    @Column(name = "fl_datetime", nullable = false)
     private LocalDateTime datetime;
 
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "flight_status", joinColumns = @JoinColumn(name = "fl_id"))
+    @Column(name = "fl_id")
+//    @ElementCollection(fetch = FetchType.EAGER)
     private FlightStatus status;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "crew_id")
     private Crew crew;
 
     public Flight() {
@@ -28,7 +40,7 @@ public class Flight extends AbstractBaseEntity {
         this.name = flight.getName();
         this.departure = flight.getDeparture();
         this.destination = flight.getDestination();
-        this.datetime = datetime;
+        this.datetime = flight.getDatetime();
         this.status = flight.getStatus();
         this.crew = flight.getCrew();
     }
@@ -90,6 +102,30 @@ public class Flight extends AbstractBaseEntity {
 
     public void setCrew(Crew crew) {
         this.crew = crew;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Flight)) return false;
+
+        Flight flight = (Flight) obj;
+
+        return getName().equals(flight.getName()) && getDeparture().equals(flight.getDeparture())
+                && getDestination().equals(flight.getDestination()) && getDatetime().equals(flight.getDatetime())
+                && getStatus() == flight.getStatus() && (getCrew() != null
+                ? getCrew().equals(flight.getCrew()) : flight.getCrew() == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getDeparture().hashCode();
+        result = 31 * result + getDestination().hashCode();
+        result = 31 * result + getDatetime().hashCode();
+        result = 31 * result + getStatus().hashCode();
+        result = 31 * result + (getCrew() != null ? getCrew().hashCode() : 0);
+        return result;
     }
 
     @Override
