@@ -6,19 +6,17 @@ import javax.persistence.*;
  * JavaBean class of Staff entity
  */
 @Entity
-@Table(name = "staff")
+@Table(name = "staffs")
 public class Staff extends AbstractBaseEntity {
 
-    @Column(name = "st_Fname", nullable = false)
-    private String firstName;
+    @Column(name = "firstname", nullable = false)
+    private String firstname;
 
-    @Column(name = "st_Lname", nullable = false)
-    private String lastName;
+    @Column(name = "lastname", nullable = false)
+    private String lastname;
 
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "department", joinColumns = @JoinColumn(name = "st_id"))
-    @Column(name = "st_id")
-//    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "department")
+    @Enumerated(EnumType.ORDINAL)
     private Department department;
 
     public Staff() {
@@ -26,39 +24,39 @@ public class Staff extends AbstractBaseEntity {
 
     public Staff(Staff staff) {
         this.id = staff.getId();
-        this.firstName = staff.getFirstName();
-        this.lastName = staff.getLastName();
+        this.firstname = staff.getFirstname();
+        this.lastname = staff.getLastname();
         this.department = staff.getDepartment();
     }
 
-    public Staff(Integer id, String firstName, String lastName, Department department) {
+    public Staff(Integer id, String firstname, String lastName, Department department) {
         super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastName;
         this.department = department;
     }
 
-    public Staff(String firstName, String lastName, Department department) {
+    public Staff(String firstname, String lastName, Department department) {
         super(null);
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastName;
         this.department = department;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstName) {
+        this.firstname = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastName) {
+        this.lastname = lastName;
     }
 
     public Department getDepartment() {
@@ -76,14 +74,14 @@ public class Staff extends AbstractBaseEntity {
 
         Staff staff = (Staff) o;
 
-        return getFirstName().equals(staff.getFirstName()) && getLastName().equals(staff.getLastName())
+        return getFirstname().equals(staff.getFirstname()) && getLastname().equals(staff.getLastname())
                 && getDepartment() == staff.getDepartment();
     }
 
     @Override
     public int hashCode() {
-        int result = getFirstName().hashCode();
-        result = 31 * result + getLastName().hashCode();
+        int result = getFirstname().hashCode();
+        result = 31 * result + getLastname().hashCode();
         result = 31 * result + getDepartment().hashCode();
         return result;
     }
@@ -92,8 +90,8 @@ public class Staff extends AbstractBaseEntity {
     public String toString() {
         return "Staff{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstname + '\'' +
+                ", lastName='" + lastname + '\'' +
                 ", department=" + department +
                 '}';
     }

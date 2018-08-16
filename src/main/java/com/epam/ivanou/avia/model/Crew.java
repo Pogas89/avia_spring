@@ -6,10 +6,10 @@ import javax.persistence.*;
  * JavaBean class of Crew entity
  */
 @Entity
-@Table(name = "crew")
+@Table(name = "crews")
 public class Crew extends AbstractBaseEntity {
 
-    @Column(name = "cr_name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @OneToOne(fetch = FetchType.LAZY)

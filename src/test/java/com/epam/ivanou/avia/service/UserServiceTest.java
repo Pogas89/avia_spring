@@ -44,8 +44,8 @@ public class UserServiceTest {
         User updated = new User(USER);
         updated.setEmail("asd@ya.ru");
         updated.setPassword("1111");
-        updated.setFirstName("adac");
-        updated.setLastName("dacas");
+        updated.setFirstname("adac");
+        updated.setLastname("dacas");
         service.update(updated);
         User need = service.get(USER_ID);
         assertMatch(updated, need);

@@ -7,25 +7,23 @@ import java.time.LocalDateTime;
  * JavaBean class of Flight entity
  */
 @Entity
-@Table(name = "flight")
+@Table(name = "flights")
 public class Flight extends AbstractBaseEntity {
 
-    @Column(name = "fl_name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "fl_departure", nullable = false)
+    @Column(name = "departure", nullable = false)
     private String departure;
 
-    @Column(name = "fl_destination", nullable = false)
+    @Column(name = "destination", nullable = false)
     private String destination;
 
-    @Column(name = "fl_datetime", nullable = false)
+    @Column(name = "datetime", nullable = false)
     private LocalDateTime datetime;
 
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "flight_status", joinColumns = @JoinColumn(name = "fl_id"))
-    @Column(name = "fl_id")
-//    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
     private FlightStatus status;
 
     @OneToOne(fetch = FetchType.LAZY)

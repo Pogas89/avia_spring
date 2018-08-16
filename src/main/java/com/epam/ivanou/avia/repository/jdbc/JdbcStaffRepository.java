@@ -51,8 +51,8 @@ public class JdbcStaffRepository implements StaffRepository {
     public Staff save(Staff staff) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("st_id",staff.getId())
-                .addValue("st_Fname",staff.getFirstName())
-                .addValue("st_Lname", staff.getLastName());
+                .addValue("st_Fname",staff.getFirstname())
+                .addValue("st_Lname", staff.getLastname());
         if (staff.isNew()){
             Number numKey = simpleJdbcInsert.usingColumns("st_Fname","st_Lname").executeAndReturnKey(map);
             staff.setId(numKey.intValue());

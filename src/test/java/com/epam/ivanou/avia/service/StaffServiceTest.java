@@ -35,8 +35,8 @@ public class StaffServiceTest {
     @Test
     public void update() throws Exception {
         Staff staff = new Staff(STAFF1);
-        staff.setFirstName("AAA");
-        staff.setLastName("BBB");
+        staff.setFirstname("AAA");
+        staff.setLastname("BBB");
         staff.setDepartment(Department.ATTENDANT);
         service.update(staff);
         assertMatch(staff, service.get(STAFF1_ID));
@@ -66,7 +66,7 @@ public class StaffServiceTest {
 
     @Test
     public void getByLastname() throws Exception {
-        Staff staff = service.getByLastname(STAFF1.getLastName());
+        Staff staff = service.getByLastname(STAFF1.getLastname());
         assertMatch(staff, STAFF1);
     }
 

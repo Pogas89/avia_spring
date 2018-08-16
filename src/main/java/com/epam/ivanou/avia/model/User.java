@@ -2,44 +2,49 @@ package com.epam.ivanou.avia.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * JavaBean class of User entity
  */
 @Entity
-@Table(name = "user")
-@NamedQueries({
+@Table(name = "users")
+//@NamedQueries({
 //        @NamedQuery(name = User.All, query = "SELECT u FROM User u LEFT JOIN FETCH u.role ORDER BY u.email"),
 //        @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.email=:email"),
-        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=?1")
-})
+//        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=?1")
+//})
 public class User extends AbstractBaseEntity {
 
     public static final String DELETE = "User.delete";
     public static final String All = "User.getAll";
     public static final String BY_EMAIL = "User.getByEmail";
 
-    @Column(name = "us_email", nullable = false)
+    @Column(name = "email", nullable = false)
     @NotEmpty
     private String email;
 
-    @Column(name = "us_password", nullable = false)
+    @Column(name = "password", nullable = false)
     @NotEmpty
     private String password;
 
-    @Column(name = "us_Fname", nullable = false)
+    @Column(name = "firstname", nullable = false)
     @NotEmpty
-    private String firstName;
+    private String firstname;
 
-    @Column(name = "us_Lname", nullable = false)
+    @Column(name = "lastname", nullable = false)
     @NotEmpty
-    private String lastName;
+    private String lastname;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = true;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "user_id")
-//    @ElementCollection(fetch = FetchType.EAGER)
-    private Role role;
+    @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> role;
 
     public User(){
     }
@@ -48,19 +53,38 @@ public class User extends AbstractBaseEntity {
         this.id = user.getId();
         this.email = user.getEmail();
         this.password = user.getPassword();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
+        this.firstname = user.getFirstname();
+        this.lastname = user.getLastname();
+        this.enabled = user.isEnabled();
         this.role = user.getRole();
     }
 
-    public User(Integer id, String email, String password,
-                String firstName, String lastName,Role role) {
+    public User(Integer id, @NotEmpty String email, @NotEmpty String password,
+                @NotEmpty String firstname, @NotEmpty String lastname,
+                boolean enabled, Set<Role> role) {
         super(id);
         this.email = email;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role=role;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.enabled = enabled;
+        this.role = role;
+    }
+
+    public User(Integer id, @NotEmpty String email, @NotEmpty String password,
+                @NotEmpty String firstname, @NotEmpty String lastname, Role role, Role... roles) {
+        this(id, email, password, firstname, lastname, true, EnumSet.of(role, roles));
+    }
+
+    public User(@NotEmpty String email, @NotEmpty String password,
+                @NotEmpty String firstname, @NotEmpty String lastname,
+                boolean enabled, Set<Role> role) {
+        this.email = email;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.enabled = enabled;
+        this.role = role;
     }
 
     public String getPassword() {
@@ -71,20 +95,20 @@ public class User extends AbstractBaseEntity {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstName) {
+        this.firstname = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastName) {
+        this.lastname = lastName;
     }
 
     public String getEmail() {
@@ -95,44 +119,56 @@ public class User extends AbstractBaseEntity {
         this.email = email;
     }
 
-    public Role getRole() {
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Set<Role> role) {
         this.role = role;
     }
 
     @Override
-    public int hashCode() {
-        int result = getEmail() != null ? getEmail().hashCode() : 0;
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
-        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return isEnabled() == user.isEnabled() && getEmail().equals(user.getEmail())
+                && getPassword().equals(user.getPassword())
+                && getFirstname().equals(user.getFirstname())
+                && getLastname().equals(user.getLastname())
+                && getRole().equals(user.getRole());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof User)) return false;
-
-        User user = (User) obj;
-
-        return (getEmail() != null ? getEmail().equals(user.getEmail()) : user.getEmail() == null)
-                && (getPassword() != null ? getPassword().equals(user.getPassword()) : user.getPassword() == null)
-                && (getFirstName() != null ? getFirstName().equals(user.getFirstName()) : user.getFirstName() == null)
-                && (getLastName() != null ? getLastName().equals(user.getLastName()) : user.getLastName() == null);
+    public int hashCode() {
+        int result = getEmail().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + getFirstname().hashCode();
+        result = 31 * result + getLastname().hashCode();
+        result = 31 * result + (isEnabled() ? 1 : 0);
+        result = 31 * result + getRole().hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstname + '\'' +
+                ", lastName='" + lastname + '\'' +
+                ", enabled=" + enabled +
                 ", role=" + role +
                 '}';
     }

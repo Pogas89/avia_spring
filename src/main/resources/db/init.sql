@@ -9,53 +9,41 @@ USE `aviacompany`;
 -- Table `aviacompany`.`staff`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `aviacompany`.`staff` (
-  `st_id`    INT         NOT NULL AUTO_INCREMENT,
-  `st_Fname` VARCHAR(45) NOT NULL,
-  `st_Lname` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`st_id`),
-  INDEX `st_id_idx` (`st_id` ASC)
-)
-  ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `aviacompany`.`department`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `aviacompany`.`department` (
-  `st_id`    INT         NOT NULL,
-  `dep_name` VARCHAR(20) NOT NULL,
-  CONSTRAINT `st_id_dep`
-  FOREIGN KEY (`st_id`)
-  REFERENCES `aviacompany`.`staff` (`st_id`)
-    ON DELETE CASCADE
-    ON UPDATE RESTRICT
+CREATE TABLE IF NOT EXISTS `aviacompany`.`staffs` (
+  `id`    INT         NOT NULL AUTO_INCREMENT,
+  `firstname` VARCHAR(45) NOT NULL,
+  `lastname` VARCHAR(45) NOT NULL,
+  `department` TINYINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `staffs_id_idx` (`id` ASC)
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `aviacompany`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `aviacompany`.`user` (
-  `user_id`     INT         NOT NULL AUTO_INCREMENT,
-  `us_email`    VARCHAR(20) NOT NULL,
-  `us_password` VARCHAR(30) NOT NULL,
-  `us_Fname`    VARCHAR(45) NOT NULL,
-  `us_Lname`    VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `email_UNIQUE` (`us_email` ASC),
-  INDEX `user_id_idx` (`user_id` ASC)
+CREATE TABLE IF NOT EXISTS `aviacompany`.`users` (
+  `id`     INT         NOT NULL AUTO_INCREMENT,
+  `email`    VARCHAR(20) NOT NULL,
+  `password` VARCHAR(30) NOT NULL,
+  `firstname`    VARCHAR(45) NOT NULL,
+  `lastname`    VARCHAR(45) NOT NULL,
+  `enabled`      TINYINT DEFAULT TRUE NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  INDEX `user_id_idx` (`id` ASC)
 )
   ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `aviacompany`.`user_status`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `aviacompany`.role (
+CREATE TABLE IF NOT EXISTS `aviacompany`.roles (
   `user_id` INT         NOT NULL,
   `role`    VARCHAR(20) NOT NULL,
   CONSTRAINT `user_id`
   FOREIGN KEY (`user_id`)
-  REFERENCES `aviacompany`.`user` (`user_id`)
+  REFERENCES `aviacompany`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT
 )
@@ -64,16 +52,16 @@ CREATE TABLE IF NOT EXISTS `aviacompany`.role (
 -- -----------------------------------------------------
 -- Table `aviacompany`.`crew`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `aviacompany`.`crew` (
-  `cr_id`   INT         NOT NULL AUTO_INCREMENT,
-  `cr_name` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `aviacompany`.`crews` (
+  `id`   INT         NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
   `user_id` INT         NOT NULL,
-  PRIMARY KEY (`cr_id`),
-  UNIQUE INDEX `name_UNIQUE` (`cr_name` ASC),
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   INDEX `user_id_idx2` (`user_id` ASC),
   CONSTRAINT `user_id2`
   FOREIGN KEY (`user_id`)
-  REFERENCES `aviacompany`.`user` (`user_id`)
+  REFERENCES `aviacompany`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT
 )
@@ -82,33 +70,20 @@ CREATE TABLE IF NOT EXISTS `aviacompany`.`crew` (
 -- -----------------------------------------------------
 -- Table `aviacompany`.`flight`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `aviacompany`.`flight` (
-  `fl_id`          INT         NOT NULL AUTO_INCREMENT,
-  `fl_name`        VARCHAR(45) NOT NULL,
-  `fl_departure`   VARCHAR(45) NOT NULL,
-  `fl_destination` VARCHAR(45) NOT NULL,
-  `fl_datetime`    TIMESTAMP   NOT NULL,
+CREATE TABLE IF NOT EXISTS `aviacompany`.`flights` (
+  `id`          INT         NOT NULL AUTO_INCREMENT,
+  `name`        VARCHAR(45) NOT NULL,
+  `departure`   VARCHAR(45) NOT NULL,
+  `destination` VARCHAR(45) NOT NULL,
+  `datetime`    TIMESTAMP   NOT NULL,
+  `status` TINYINT NOT NULL,
   `crew_id`        INT         NULL,
-  PRIMARY KEY (`fl_id`),
-  INDEX `fl_id_idx` (`fl_id` ASC),
+  PRIMARY KEY (`id`),
+  INDEX `fl_id_idx` (`id` ASC),
   INDEX `crew_id_idx` (`crew_id` ASC),
   CONSTRAINT `crew_id`
   FOREIGN KEY (`crew_id`)
-  REFERENCES `aviacompany`.`crew` (`cr_id`)
-    ON DELETE CASCADE
-    ON UPDATE RESTRICT
-)
-  ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `aviacompany`.`flight_status`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `aviacompany`.`flight_status` (
-  `fl_id`     INT         NOT NULL,
-  `fl_status` VARCHAR(45) NOT NULL,
-  CONSTRAINT `fl_id`
-  FOREIGN KEY (`fl_id`)
-  REFERENCES `aviacompany`.`flight` (`fl_id`)
+  REFERENCES `aviacompany`.`crews` (`id`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT
 )
@@ -124,12 +99,12 @@ CREATE TABLE IF NOT EXISTS `aviacompany`.`crew_staff` (
   INDEX `st_id_idx2` (`st_id` ASC),
   CONSTRAINT `cr_id`
   FOREIGN KEY (`cr_id`)
-  REFERENCES `aviacompany`.`crew` (`cr_id`)
+  REFERENCES `aviacompany`.`crews` (`id`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `st_id`
   FOREIGN KEY (`st_id`)
-  REFERENCES `aviacompany`.`staff` (`st_id`)
+  REFERENCES `aviacompany`.`staffs` (`id`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT
 )
