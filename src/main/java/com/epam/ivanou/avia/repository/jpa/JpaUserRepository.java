@@ -3,6 +3,7 @@ package com.epam.ivanou.avia.repository.jpa;
 import com.epam.ivanou.avia.model.User;
 import com.epam.ivanou.avia.repository.UserRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
+@Transactional
 public class JpaUserRepository implements UserRepository {
 
     @PersistenceContext

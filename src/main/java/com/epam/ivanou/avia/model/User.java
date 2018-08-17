@@ -10,11 +10,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "users")
-//@NamedQueries({
-//        @NamedQuery(name = User.All, query = "SELECT u FROM User u LEFT JOIN FETCH u.role ORDER BY u.email"),
-//        @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.email=:email"),
-//        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=?1")
-//})
+@NamedQueries({
+        @NamedQuery(name = User.All, query = "SELECT u FROM User u LEFT JOIN FETCH u.role ORDER BY u.email"),
+        @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.email=:email"),
+        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=?1")
+})
 public class User extends AbstractBaseEntity {
 
     public static final String DELETE = "User.delete";
