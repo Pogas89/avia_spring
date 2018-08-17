@@ -26,7 +26,7 @@ INSERT INTO `aviacompany`.`roles` (`user_id`, `role`) VALUES (1000,'ROLE_ADMIN')
 -- -----------------------------------------------------
 -- Test insert into staff
 -- -----------------------------------------------------
-INSERT INTO `aviacompany`.`staffs` (`firstname`, `lastname`, `department`) VALUES ('Alexis','Roy',0),('Kylan','Knapp',1);
+INSERT INTO `aviacompany`.`staffs` (`firstname`, `lastname`, `department`) VALUES ('Alexis','Roy',0),('Kylan','Knapp',2);
 
 -- -----------------------------------------------------
 -- Test insert into flight

@@ -24,11 +24,10 @@ public class JdbcStaffRepository implements StaffRepository {
         @Override
         public Staff mapRow(ResultSet resultSet, int i) throws SQLException {
             int k=1;
-            Staff staff = new Staff(resultSet.getInt(k++),
+            return new Staff(resultSet.getInt(k++),
                     resultSet.getString(k++),
                     resultSet.getString(k++),
-                    Department.valueOf(resultSet.getString(k++)));
-            return staff;
+                    Department.values()[resultSet.getInt(k)]);
         }
     };
 
@@ -44,47 +43,46 @@ public class JdbcStaffRepository implements StaffRepository {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-        .withTableName("staff").usingGeneratedKeyColumns("st_id");
+        .withTableName("staffs").usingGeneratedKeyColumns("id");
     }
 
     @Override
     public Staff save(Staff staff) {
         MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("st_id",staff.getId())
-                .addValue("st_Fname",staff.getFirstname())
-                .addValue("st_Lname", staff.getLastname());
+                .addValue("id",staff.getId())
+                .addValue("firstname",staff.getFirstname())
+                .addValue("lastname", staff.getLastname())
+                .addValue("department", staff.getDepartment().ordinal());
         if (staff.isNew()){
-            Number numKey = simpleJdbcInsert.usingColumns("st_Fname","st_Lname").executeAndReturnKey(map);
+            Number numKey = simpleJdbcInsert.executeAndReturnKey(map);
             staff.setId(numKey.intValue());
-            jdbcTemplate.update("INSERT INTO department (st_id, dep_name) values (?,?)",staff.getId(),staff.getDepartment().toString());
         } else {
-            namedParameterJdbcTemplate.update("UPDATE staff SET st_Fname=:st_Fname, st_Lname=:st_Lname" +
-                    " WHERE st_id=:st_id;", map);
-            jdbcTemplate.update("UPDATE department set dep_name=? where department.st_id=?;",staff.getDepartment().toString(), staff.getId());
+            namedParameterJdbcTemplate.update("UPDATE staffs SET firstname=:firstname, lastname=:lastname, " +
+                    "department=:department WHERE id=:id;", map);
         }
         return staff;
     }
 
     @Override
     public boolean delete(int id) {
-        return jdbcTemplate.update("DELETE FROM staff WHERE st_id=?;",id)!=0;
+        return jdbcTemplate.update("DELETE FROM staffs WHERE id=?;",id)!=0;
     }
 
     @Override
     public Staff get(int id) {
-        return jdbcTemplate.queryForObject("select staff.st_id,st_Fname,st_Lname, dep_name " +
-                "from staff inner join department d on staff.st_id = d.st_id where staff.st_id=?;",ROW_MAPPER,id);
+        return jdbcTemplate.queryForObject("select id, firstname, lastname, department " +
+                "FROM staffs where id=?;",ROW_MAPPER,id);
     }
 
     @Override
     public Staff getByLastname(String lastname) {
-        return jdbcTemplate.queryForObject("select staff.st_id,st_Fname,st_Lname, dep_name " +
-                "from staff inner join department d on staff.st_id = d.st_id where st_Lname=?;",ROW_MAPPER,lastname);
+        return jdbcTemplate.queryForObject("select id, firstname, lastname, department " +
+                "FROM staffs where lastname=?;",ROW_MAPPER,lastname);
     }
 
     @Override
     public List<Staff> getAll() {
-        return jdbcTemplate.query("select staff.st_id,st_Fname,st_Lname, dep_name " +
-                "from staff inner join department d on staff.st_id = d.st_id ORDER BY st_Lname, st_Fname",ROW_MAPPER);
+        return jdbcTemplate.query("select id, firstname, lastname, department " +
+                "FROM staffs ORDER BY lastname, firstname",ROW_MAPPER);
     }
 }

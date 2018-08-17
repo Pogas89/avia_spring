@@ -42,8 +42,8 @@ public class JdbcCrewRepository implements CrewRepository {
     @Autowired
     public JdbcCrewRepository(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("crew")
-                .usingGeneratedKeyColumns("cr_id");
+                .withTableName("crews")
+                .usingGeneratedKeyColumns("id");
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
@@ -51,31 +51,31 @@ public class JdbcCrewRepository implements CrewRepository {
     @Override
     public Crew save(Crew crew) {
         MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("cr_id", crew.getId())
-                .addValue("cr_name", crew.getName())
+                .addValue("id", crew.getId())
+                .addValue("name", crew.getName())
                 .addValue("user_id", crew.getUser().getId());
 
         if (crew.isNew()) {
             Number newKey = simpleJdbcInsert.executeAndReturnKey(map);
             crew.setId(newKey.intValue());
         } else {
-            namedParameterJdbcTemplate.update("UPDATE  crew SET cr_name=:cr_name, user_id=:user_id WHERE cr_id=:cr_id;", map);
+            namedParameterJdbcTemplate.update("UPDATE  crews SET name=:name, user_id=:user_id WHERE id=:id;", map);
         }
         return crew;
     }
 
     @Override
     public boolean delete(int id) {
-        return jdbcTemplate.update("DELETE FROM crew WHERE cr_id=?;", id) != 0;
+        return jdbcTemplate.update("DELETE FROM crews WHERE id=?;", id) != 0;
     }
 
     @Override
     public Crew get(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM crew WHERE cr_id=?;", ROW_MAPPER, id);
+        return jdbcTemplate.queryForObject("SELECT * FROM crews WHERE id=?;", ROW_MAPPER, id);
     }
 
     @Override
     public List<Crew> getAll() {
-        return jdbcTemplate.query("SELECT * FROM crew ORDER BY cr_name", ROW_MAPPER);
+        return jdbcTemplate.query("SELECT * FROM crews ORDER BY name", ROW_MAPPER);
     }
 }
