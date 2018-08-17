@@ -8,11 +8,11 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTestData {
-    public static Integer ADMIN_ID = 1000;
-    public static Integer USER_ID = 1001;
-    public static User ADMIN = new User(1000, "admin@gmail.com",
+    public static Integer ADMIN_ID = 1;
+    public static Integer USER_ID = 2;
+    public static User ADMIN = new User(ADMIN_ID, "admin@gmail.com",
             "admin", "Dmitry", "Ivanov", Role.ROLE_ADMIN);
-    public static User USER = new User(1001, "user@gmail.com",
+    public static User USER = new User(USER_ID, "user@gmail.com",
             "user", "Ostap", "Bender", Role.ROLE_DISPETCHER);
 
     public static void assertMatch(User actual, User expected) {

@@ -7,11 +7,11 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <context:property-placeholder location="classpath:db/mysql.properties" system-properties-mode="OVERRIDE"/>
+    <context:property-placeholder location="classpath:db/postgre.properties" system-properties-mode="OVERRIDE"/>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
-        <jdbc:script location="db/init.sql"/>
-        <jdbc:script location="db/populateDb.sql"/>
+        <jdbc:script location="db/initPostgre.sql"/>
+        <jdbc:script location="db/populatePostgresDb.sql"/>
     </jdbc:initialize-database>
 
     <!--no pool-->
@@ -47,7 +47,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
                   p:showSql="${jpa.showSql}"
-                  p:databasePlatform="org.hibernate.dialect.MySQL57Dialect">
+                  p:databasePlatform="org.hibernate.dialect.PostgreSQL95Dialect">
             </bean>
         </property>
     </bean>

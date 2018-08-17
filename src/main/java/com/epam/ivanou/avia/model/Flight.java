@@ -8,7 +8,14 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "flights")
+@NamedQueries({
+        @NamedQuery(name = Flight.DELETE, query = "DELETE FROM Flight f WHERE f.id=?1"),
+        @NamedQuery(name = Flight.All, query = "SELECT f FROM Flight f")
+})
 public class Flight extends AbstractBaseEntity {
+
+    public static final String DELETE = "Flight.delete";
+    public static final String All = "Flight.getAll";
 
     @Column(name = "name", nullable = false)
     private String name;

@@ -19,7 +19,7 @@ import static com.epam.ivanou.avia.StaffTestData.*;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
+@Sql(scripts = "classpath:db/populatePostgresDb.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class StaffServiceTest {
 
     @Autowired

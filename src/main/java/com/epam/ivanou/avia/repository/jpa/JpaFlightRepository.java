@@ -3,12 +3,14 @@ package com.epam.ivanou.avia.repository.jpa;
 import com.epam.ivanou.avia.model.Flight;
 import com.epam.ivanou.avia.repository.FlightRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@Transactional
 public class JpaFlightRepository implements FlightRepository {
 
     @PersistenceContext
@@ -16,21 +18,27 @@ public class JpaFlightRepository implements FlightRepository {
 
     @Override
     public Flight save(Flight flight) {
-        return null;
+        if (flight.isNew()){
+            em.persist(flight);
+        } else {
+            em.merge(flight);
+        }
+        return flight;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return em.createNamedQuery(Flight.DELETE)
+                .setParameter(1, id).executeUpdate() != 0;
     }
 
     @Override
     public Flight get(int id) {
-        return null;
+        return em.find(Flight.class,id);
     }
 
     @Override
     public List<Flight> getAll() {
-        return null;
+        return em.createNamedQuery(Flight.All, Flight.class).getResultList();
     }
 }

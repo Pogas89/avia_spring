@@ -37,7 +37,6 @@ public class JpaUserRepository implements UserRepository {
 
     @Override
     public User get(int id) {
-        System.out.println(User.class);
         return em.find(User.class, id);
     }
 
