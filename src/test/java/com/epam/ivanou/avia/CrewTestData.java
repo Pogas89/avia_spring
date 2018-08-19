@@ -13,11 +13,11 @@ public class CrewTestData {
     public static Crew CREW2 = new Crew(CREW2_ID, "Crew2", UserTestData.ADMIN);
 
     public static void assertMatch(Crew actual, Crew expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields("user_id").isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     public static void assertMatch(Iterable<Crew> actual, Iterable<Crew> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("user_id").isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     public static void assertMatch(Iterable<Crew> actual, Crew... expected) {

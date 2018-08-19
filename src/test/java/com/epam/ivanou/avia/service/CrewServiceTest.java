@@ -34,7 +34,7 @@ public class CrewServiceTest {
         assertMatch(service.getAll(),CREW,CREW2,crew);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = Exception.class)
     public void duplicateLogin() throws Exception {
         service.create(new Crew(null,"Crew2", UserTestData.ADMIN));
     }

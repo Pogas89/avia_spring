@@ -7,12 +7,19 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "crews")
+@NamedQueries({
+        @NamedQuery(name = Crew.All, query = "select c from Crew c"),
+        @NamedQuery(name = Crew.DELETE, query = "DELETE FROM Crew c WHERE c.id=?1")
+})
 public class Crew extends AbstractBaseEntity {
+
+    public static final String DELETE = "Crew.delete";
+    public static final String All = "Crew.getAll";
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

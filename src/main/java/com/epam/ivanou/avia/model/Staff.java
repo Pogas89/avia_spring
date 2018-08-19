@@ -7,7 +7,16 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "staffs")
+@NamedQueries({
+        @NamedQuery(name = Staff.All, query = "select s from Staff s order by s.lastname, s.firstname"),
+        @NamedQuery(name = Staff.DELETE, query = "delete from Staff s where s.id=?1"),
+        @NamedQuery(name = Staff.BY_LASTNAME, query = "select s from Staff s where s.lastname=?1")
+})
 public class Staff extends AbstractBaseEntity {
+
+    public static final String DELETE = "Staff.delete";
+    public static final String All = "Staff.getAll";
+    public static final String BY_LASTNAME = "Staff.getByLastName";
 
     @Column(name = "firstname", nullable = false)
     private String firstname;
