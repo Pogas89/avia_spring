@@ -1,6 +1,7 @@
 package com.epam.ivanou.avia.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * JavaBean class of Staff entity
@@ -27,6 +28,14 @@ public class Staff extends AbstractBaseEntity {
     @Column(name = "department")
     @Enumerated(EnumType.ORDINAL)
     private Department department;
+
+    @ManyToMany
+    @JoinTable(
+            name = "crew_staff",
+            joinColumns = @JoinColumn(name = "cr_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "st_id", referencedColumnName = "id")
+    )
+    private List<Crew> crews;
 
     public Staff() {
     }
@@ -74,6 +83,14 @@ public class Staff extends AbstractBaseEntity {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public List<Crew> getCrews() {
+        return crews;
+    }
+
+    public void setCrews(List<Crew> crews) {
+        this.crews = crews;
     }
 
     @Override

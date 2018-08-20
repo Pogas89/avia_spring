@@ -1,6 +1,7 @@
 package com.epam.ivanou.avia.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * JavaBean class of Crew entity
@@ -22,6 +23,14 @@ public class Crew extends AbstractBaseEntity {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "crew_staff",
+            joinColumns = @JoinColumn(name = "cr_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "st_id", referencedColumnName = "id")
+    )
+    private List<Staff> staffs;
 
     public Crew() {
     }
@@ -53,6 +62,14 @@ public class Crew extends AbstractBaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Staff> getStaffs() {
+        return staffs;
+    }
+
+    public void setStaffs(List<Staff> staffs) {
+        this.staffs = staffs;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.epam.ivanou.avia.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.EnumSet;
 import java.util.Set;
@@ -22,6 +23,7 @@ public class User extends AbstractBaseEntity {
     public static final String BY_EMAIL = "User.getByEmail";
 
     @Column(name = "email", nullable = false)
+    @Email
     @NotEmpty
     private String email;
 
