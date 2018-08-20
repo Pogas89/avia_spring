@@ -16,15 +16,15 @@ public abstract class AbstractBaseEntity {
         this.id = id;
     }
 
-    public Integer getId() {
+    public final Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public final void setId(Integer id) {
         this.id = id;
     }
 
-    public boolean isNew() {
+    public final boolean isNew() {
         return this.id==null;
     }
 

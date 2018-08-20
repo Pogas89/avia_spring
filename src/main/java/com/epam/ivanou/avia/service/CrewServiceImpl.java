@@ -1,7 +1,6 @@
 package com.epam.ivanou.avia.service;
 
 import com.epam.ivanou.avia.model.Crew;
-import com.epam.ivanou.avia.model.User;
 import com.epam.ivanou.avia.repository.CrewRepository;
 import com.epam.ivanou.avia.repository.UserRepository;
 import com.epam.ivanou.avia.util.exception.NotFoundException;
@@ -10,16 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.epam.ivanou.avia.util.ValidationUtil.*;
+import static com.epam.ivanou.avia.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class CrewServiceImpl implements CrewService {
 
     @Autowired
     private CrewRepository crewRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     public Crew create(Crew crew) {

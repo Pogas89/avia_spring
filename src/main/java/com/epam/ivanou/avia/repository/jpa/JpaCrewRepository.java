@@ -39,6 +39,6 @@ public class JpaCrewRepository implements CrewRepository {
 
     @Override
     public List<Crew> getAll() {
-        return em.createNamedQuery(Crew.All, Crew.class).getResultList();
+        return em.createNamedQuery(Crew.GET_ALL, Crew.class).getResultList();
     }
 }

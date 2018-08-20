@@ -3,7 +3,9 @@ package com.epam.ivanou.avia.util;
 import com.epam.ivanou.avia.model.AbstractBaseEntity;
 import com.epam.ivanou.avia.util.exception.NotFoundException;
 
-public class ValidationUtil {
+public final class ValidationUtil {
+    private ValidationUtil(){
+    }
 
     public static void checkNotFoundWithId(boolean found, int id) {
         checkNotFound(found, "id=" + id);

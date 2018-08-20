@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @Table(name = "flights")
 @NamedQueries({
         @NamedQuery(name = Flight.DELETE, query = "DELETE FROM Flight f WHERE f.id=?1"),
-        @NamedQuery(name = Flight.All, query = "SELECT f FROM Flight f")
+        @NamedQuery(name = Flight.GET_ALL, query = "SELECT f FROM Flight f")
 })
 public class Flight extends AbstractBaseEntity {
 
     public static final String DELETE = "Flight.delete";
-    public static final String All = "Flight.getAll";
+    public static final String GET_ALL = "Flight.getAll";
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -111,8 +111,12 @@ public class Flight extends AbstractBaseEntity {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Flight)) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Flight)) {
+            return false;
+        }
 
         Flight flight = (Flight) obj;
 
@@ -125,11 +129,11 @@ public class Flight extends AbstractBaseEntity {
     @Override
     public int hashCode() {
         int result = getName().hashCode();
-        result = 31 * result + getDeparture().hashCode();
-        result = 31 * result + getDestination().hashCode();
-        result = 31 * result + getDatetime().hashCode();
-        result = 31 * result + getStatus().hashCode();
-        result = 31 * result + (getCrew() != null ? getCrew().hashCode() : 0);
+        result = (31 * result) + getDeparture().hashCode();
+        result = (31 * result) + getDestination().hashCode();
+        result = (31 * result) + getDatetime().hashCode();
+        result = (31 * result) + getStatus().hashCode();
+        result = (31 * result) + ((getCrew() != null) ? getCrew().hashCode() : 0);
         return result;
     }
 

@@ -9,13 +9,13 @@ import java.util.List;
 @Entity
 @Table(name = "crews")
 @NamedQueries({
-        @NamedQuery(name = Crew.All, query = "select c from Crew c"),
+        @NamedQuery(name = Crew.GET_ALL, query = "select c from Crew c"),
         @NamedQuery(name = Crew.DELETE, query = "DELETE FROM Crew c WHERE c.id=?1")
 })
 public class Crew extends AbstractBaseEntity {
 
     public static final String DELETE = "Crew.delete";
-    public static final String All = "Crew.getAll";
+    public static final String GET_ALL = "Crew.getAll";
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -74,8 +74,12 @@ public class Crew extends AbstractBaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Crew)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Crew)) {
+            return false;
+        }
 
         Crew crew = (Crew) o;
 
@@ -85,7 +89,7 @@ public class Crew extends AbstractBaseEntity {
     @Override
     public int hashCode() {
         int result = getName().hashCode();
-        result = 31 * result + getUser().hashCode();
+        result = (31 * result) + getUser().hashCode();
         return result;
     }
 

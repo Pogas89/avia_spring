@@ -39,6 +39,6 @@ public class JpaFlightRepository implements FlightRepository {
 
     @Override
     public List<Flight> getAll() {
-        return em.createNamedQuery(Flight.All, Flight.class).getResultList();
+        return em.createNamedQuery(Flight.GET_ALL, Flight.class).getResultList();
     }
 }

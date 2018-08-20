@@ -45,6 +45,6 @@ public class JpaStaffRepository implements StaffRepository {
 
     @Override
     public List<Staff> getAll() {
-        return em.createNamedQuery(Staff.All,Staff.class).getResultList();
+        return em.createNamedQuery(Staff.GET_ALL,Staff.class).getResultList();
     }
 }

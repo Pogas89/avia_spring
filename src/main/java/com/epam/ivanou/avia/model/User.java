@@ -12,14 +12,14 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-        @NamedQuery(name = User.All, query = "SELECT u FROM User u LEFT JOIN FETCH u.role ORDER BY u.email"),
+        @NamedQuery(name = User.GET_ALL, query = "SELECT u FROM User u LEFT JOIN FETCH u.role ORDER BY u.email"),
         @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.email=:email"),
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=?1")
 })
 public class User extends AbstractBaseEntity {
 
     public static final String DELETE = "User.delete";
-    public static final String All = "User.getAll";
+    public static final String GET_ALL = "User.getAll";
     public static final String BY_EMAIL = "User.getByEmail";
 
     @Column(name = "email", nullable = false)
@@ -139,8 +139,12 @@ public class User extends AbstractBaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
 
         User user = (User) o;
 
@@ -154,11 +158,11 @@ public class User extends AbstractBaseEntity {
     @Override
     public int hashCode() {
         int result = getEmail().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + getFirstname().hashCode();
-        result = 31 * result + getLastname().hashCode();
-        result = 31 * result + (isEnabled() ? 1 : 0);
-        result = 31 * result + getRole().hashCode();
+        result = (31 * result) + getPassword().hashCode();
+        result = (31 * result) + getFirstname().hashCode();
+        result = (31 * result) + getLastname().hashCode();
+        result = (31 * result) + (isEnabled() ? 1 : 0);
+        result = (31 * result) + getRole().hashCode();
         return result;
     }
 

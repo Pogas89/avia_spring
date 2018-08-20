@@ -17,9 +17,6 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightRepository flightRepository;
 
-    @Autowired
-    private CrewRepository crewRepository;
-
     @Override
     public Flight create(Flight flight) {
         return flightRepository.save(flight);
@@ -42,7 +39,6 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<Flight> getAll() {
-        List<Flight> flightList = flightRepository.getAll();
-        return flightList;
+        return flightRepository.getAll();
     }
 }
