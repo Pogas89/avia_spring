@@ -7,21 +7,12 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <context:property-placeholder location="classpath:db/postgre.properties" system-properties-mode="OVERRIDE"/>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
-        <jdbc:script location="db/initPostgre.sql"/>
-        <jdbc:script location="db/populatePostgresDb.sql"/>
+        <jdbc:script location="db/${jdbc.initLocation}"/>
+        <jdbc:script location="db/${jdbc.populateLocation}"/>
     </jdbc:initialize-database>
 
-    <!--no pool-->
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${database.driverClassName}"/>
-        <property name="url" value="${database.url}"/>
-        <property name="username" value="${database.user}"/>
-        <property name="password" value="${database.password}"/>
-    </bean>
 
     <context:component-scan base-package="com.epam.ivanou.avia.repository.jpa"/>
 
@@ -70,4 +61,29 @@
             <constructor-arg ref="dataSource"/>
         </bean>
         -->
+
+    <beans profile="postgres">
+        <context:property-placeholder location="classpath:db/postgre.properties" system-properties-mode="OVERRIDE"/>
+
+        <bean id="dataSource"
+              class="org.apache.tomcat.jdbc.pool.DataSource">
+            <property name="driverClassName" value="${database.driverClassName}"/>
+            <property name="url" value="${database.url}"/>
+            <property name="username" value="${database.user}"/>
+            <property name="password" value="${database.password}"/>
+        </bean>
+    </beans>
+
+    <!--no pool-->
+    <beans profile="mysql">
+        <context:property-placeholder location="classpath:db/mysql.properties" system-properties-mode="OVERRIDE"/>
+
+        <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="${database.driverClassName}"/>
+            <property name="url" value="${database.url}"/>
+            <property name="username" value="${database.user}"/>
+            <property name="password" value="${database.password}"/>
+        </bean>
+    </beans>
 </beans>
