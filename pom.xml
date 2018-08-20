@@ -18,6 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <spring.version>5.0.4.RELEASE</spring.version>
+        <spring-data-jpa.version>2.0.9.RELEASE</spring-data-jpa.version>
 
         <!-- Tests -->
         <junit.version>4.12</junit.version>
@@ -99,9 +100,9 @@
 
         <!-- Database -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>2.0.9.RELEASE</version>
         </dependency>
 
         <dependency>
