@@ -1,7 +1,6 @@
 package com.epam.ivanou.avia.service;
 
 import com.epam.ivanou.avia.model.Flight;
-import com.epam.ivanou.avia.repository.CrewRepository;
 import com.epam.ivanou.avia.repository.FlightRepository;
 import com.epam.ivanou.avia.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

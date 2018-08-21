@@ -14,7 +14,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = User.GET_ALL, query = "SELECT u FROM User u LEFT JOIN FETCH u.role ORDER BY u.email"),
         @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.role WHERE u.email=:email"),
-        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=?1")
+        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id")
 })
 public class User extends AbstractBaseEntity {
 

@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "crews")
 @NamedQueries({
-        @NamedQuery(name = Crew.GET_ALL, query = "select c from Crew c"),
+        @NamedQuery(name = Crew.GET_ALL, query = "select c from Crew c ORDER BY c.name"),
         @NamedQuery(name = Crew.DELETE, query = "DELETE FROM Crew c WHERE c.id=?1")
 })
 public class Crew extends AbstractBaseEntity {

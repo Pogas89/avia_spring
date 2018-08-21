@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public class DataJpaUserRepository implements UserRepository {
-    private static final Sort SORT_EMAIL = new Sort("email");
+    private static final Sort SORT_EMAIL = new Sort(Sort.Direction.ASC,"email");
 
     @Autowired
-    CrudUserRepository repository;
+    private CrudUserRepository repository;
 
     @Override
     public User save(User user) {
@@ -31,8 +31,8 @@ public class DataJpaUserRepository implements UserRepository {
     }
 
     @Override
-    public User getByEmail(String login) {
-        return repository.getByEmail(login);
+    public User getByEmail(String email) {
+        return repository.findUserByEmail(email);
     }
 
     @Override

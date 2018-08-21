@@ -1,6 +1,6 @@
 package com.epam.ivanou.avia.repository.datajpa;
 
-import com.epam.ivanou.avia.model.User;
+import com.epam.ivanou.avia.model.Crew;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,21 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudUserRepository extends JpaRepository<User, Integer> {
+public interface CrudCrewRepository extends JpaRepository<Crew, Integer> {
     @Override
     @Transactional
-    User save(User user);
+    Crew save(Crew crew);
+
+    @Override
+    List<Crew> findAll(Sort sort);
+
+    @Override
+    Optional<Crew> findById(Integer integer);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM User u WHERE u.id=?1")
-    int delete(int id);
-
-    @Override
-    Optional<User> findById(Integer integer);
-
-    @Override
-    List<User> findAll(Sort sort);
-
-    User findUserByEmail(String email);
+    @Query(name = Crew.DELETE)
+    int delete (int id);
 }

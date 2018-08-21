@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByLogin(String login) throws NotFoundException {
-        return checkNotFound(repository.getByEmail(login), login);
+    public User getByEmail(String email) throws NotFoundException {
+        return checkNotFound(repository.getByEmail(email), email);
     }
 
     @Override

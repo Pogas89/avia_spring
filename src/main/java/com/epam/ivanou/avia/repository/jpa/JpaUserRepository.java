@@ -31,7 +31,7 @@ public class JpaUserRepository implements UserRepository {
 //        TypedQuery<User> query = em.createQuery("DELETE from User u where u.id=:id", User.class);
 //        return query.setParameter("id", id).executeUpdate() != 0;
         return em.createNamedQuery(User.DELETE)
-                .setParameter(1, id).executeUpdate() != 0;
+                .setParameter("id", id).executeUpdate() != 0;
     }
 
     @Override

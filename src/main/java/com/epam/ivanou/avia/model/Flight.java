@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "flights")
 @NamedQueries({
         @NamedQuery(name = Flight.DELETE, query = "DELETE FROM Flight f WHERE f.id=?1"),
-        @NamedQuery(name = Flight.GET_ALL, query = "SELECT f FROM Flight f")
+        @NamedQuery(name = Flight.GET_ALL, query = "SELECT f FROM Flight f order by f.datetime")
 })
 public class Flight extends AbstractBaseEntity {
 
@@ -33,7 +33,7 @@ public class Flight extends AbstractBaseEntity {
     @Enumerated(EnumType.ORDINAL)
     private FlightStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "crew_id")
     private Crew crew;
 

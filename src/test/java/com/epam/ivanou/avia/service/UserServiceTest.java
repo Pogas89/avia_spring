@@ -77,14 +77,14 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getByLogin() throws Exception {
-        User user = service.getByLogin(ADMIN.getEmail());
+    public void getByEmail() throws Exception {
+        User user = service.getByEmail(ADMIN.getEmail());
         assertMatch(user,ADMIN);
     }
 
     @Test(expected = NotFoundException.class)
     public void getNotFoundByLogin() throws Exception {
-        service.getByLogin("empty");
+        service.getByEmail("empty");
     }
 
     @Test

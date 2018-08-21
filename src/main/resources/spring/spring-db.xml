@@ -47,31 +47,31 @@
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
     <!-- JPA -->
-    <beans profile="jpa">
-        <context:component-scan base-package="com.epam.ivanou.avia.repository.jpa"/>
-    </beans>
+    <!--<beans profile="jpa">-->
+        <!--<context:component-scan base-package="com.epam.ivanou.avia.repository.jpa"/>-->
+    <!--</beans>-->
 
     <!-- DataJPA -->
-    <beans profile="datajpa">
+    <!--<beans profile="datajpa">-->
         <context:component-scan base-package="com.epam.ivanou.avia.repository.datajpa"/>
 
         <jpa:repositories base-package="com.epam.ivanou.avia.repository.datajpa"/>
 
-    </beans>
+    <!--</beans>-->
 
     <!-- JDBC -->
-    <beans profile="jdbc">
+    <!--<beans profile="jdbc">-->
 
-        <context:component-scan base-package="com.epam.ivanou.avia.repository.jdbc"/>
+        <!--<context:component-scan base-package="com.epam.ivanou.avia.repository.jdbc"/>-->
 
-        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-            <constructor-arg ref="dataSource"/>
-        </bean>
+        <!--<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">-->
+            <!--<constructor-arg ref="dataSource"/>-->
+        <!--</bean>-->
 
-        <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-            <constructor-arg ref="dataSource"/>
-        </bean>
-    </beans>
+        <!--<bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">-->
+            <!--<constructor-arg ref="dataSource"/>-->
+        <!--</bean>-->
+    <!--</beans>-->
 
     <beans profile="postgres">
         <context:property-placeholder location="classpath:db/postgre.properties" system-properties-mode="OVERRIDE"/>
