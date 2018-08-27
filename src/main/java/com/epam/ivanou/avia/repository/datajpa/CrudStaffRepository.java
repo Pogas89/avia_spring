@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional(readOnly = true)
 public interface CrudStaffRepository extends JpaRepository<Staff, Integer> {
     @Override
     @Transactional

@@ -10,12 +10,13 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class JpaUserRepository implements UserRepository {
 
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     @Override
     public User save(User user) {
         if (user.isNew()) {
@@ -26,6 +27,7 @@ public class JpaUserRepository implements UserRepository {
         return user;
     }
 
+    @Transactional
     @Override
     public boolean delete(int id) {
 //        TypedQuery<User> query = em.createQuery("DELETE from User u where u.id=:id", User.class);

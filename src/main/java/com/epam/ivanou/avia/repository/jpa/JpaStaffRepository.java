@@ -10,12 +10,13 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class JpaStaffRepository implements StaffRepository {
 
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     @Override
     public Staff save(Staff staff) {
         if (staff.isNew()) {
@@ -26,6 +27,7 @@ public class JpaStaffRepository implements StaffRepository {
         return staff;
     }
 
+    @Transactional
     @Override
     public boolean delete(int id) {
         return em.createNamedQuery(Staff.DELETE)

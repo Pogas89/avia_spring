@@ -10,12 +10,13 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class JpaCrewRepository implements CrewRepository {
 
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     @Override
     public Crew save(Crew crew) {
         if (crew.isNew()){
@@ -26,6 +27,7 @@ public class JpaCrewRepository implements CrewRepository {
         return crew;
     }
 
+    @Transactional
     @Override
     public boolean delete(int id) {
         return em.createNamedQuery(Crew.DELETE).setParameter(1,id)

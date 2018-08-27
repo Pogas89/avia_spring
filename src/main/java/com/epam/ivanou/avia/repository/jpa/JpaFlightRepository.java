@@ -10,12 +10,13 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class JpaFlightRepository implements FlightRepository {
 
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     @Override
     public Flight save(Flight flight) {
         if (flight.isNew()){
@@ -26,6 +27,7 @@ public class JpaFlightRepository implements FlightRepository {
         return flight;
     }
 
+    @Transactional
     @Override
     public boolean delete(int id) {
         return em.createNamedQuery(Flight.DELETE)
