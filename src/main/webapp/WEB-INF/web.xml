@@ -8,7 +8,7 @@
     
     <context-param>
         <param-name>spring.profiles.default</param-name>
-        <param-value>postgres,jpa</param-value>
+        <param-value>postgres,datajpa</param-value>
     </context-param>
     
     <context-param>
@@ -22,4 +22,13 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>com.epam.ivanou.avia.web.user.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
 </web-app>
