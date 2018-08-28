@@ -6,7 +6,6 @@ import com.epam.ivanou.avia.model.FlightStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -22,17 +21,16 @@ import static com.epam.ivanou.avia.FlightTestData.*;
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
 })
-@ActiveProfiles("postgres")
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populatePostgresDb.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class FlightServiceTest {
+abstract public class FlightServiceTest {
 
     @Autowired
     private FlightService service;
 
     @Test
     public void create() throws Exception {
-        Flight flight = service.create(new Flight(null, "11111", "AAAA", "AAAA", LocalDateTime.of(2016, 10, 18,12, 12, 45), FlightStatus.OPENED, null));
+        Flight flight = service.create(new Flight(null, "11111", "AAAA", "AAAA", LocalDateTime.of(2016, 10, 18, 12, 12, 45), FlightStatus.OPENED, null));
         assertMatch(service.getAll(), FLIGHT1, flight, FLIGHT2);
     }
 
@@ -42,7 +40,7 @@ public class FlightServiceTest {
         newFlight.setDeparture("Asdasd");
         newFlight.setDestination("sadsAsdasd");
         newFlight.setName("1dasda1");
-        newFlight.setDatetime(LocalDateTime.of(2010, 1, 3,10, 10, 10));
+        newFlight.setDatetime(LocalDateTime.of(2010, 1, 3, 10, 10, 10));
         newFlight.setStatus(FlightStatus.CLOSED);
         newFlight.setCrew(CrewTestData.CREW2);
         service.update(newFlight);
