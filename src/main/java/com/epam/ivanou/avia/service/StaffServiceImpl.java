@@ -4,6 +4,8 @@ import com.epam.ivanou.avia.model.Staff;
 import com.epam.ivanou.avia.repository.StaffRepository;
 import com.epam.ivanou.avia.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,16 +19,19 @@ public class StaffServiceImpl implements StaffService {
     private StaffRepository repository;
 
     @Override
+    @CacheEvict(value = "staffs", allEntries = true)
     public Staff create(Staff staff) {
         return repository.save(staff);
     }
 
     @Override
+    @CacheEvict(value = "staffs", allEntries = true)
     public void update(Staff staff) {
         repository.save(staff);
     }
 
     @Override
+    @CacheEvict(value = "staffs", allEntries = true)
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(repository.delete(id),id);
     }
@@ -42,6 +47,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    @Cacheable("staffs")
     public List<Staff> getAll() {
         return repository.getAll();
     }

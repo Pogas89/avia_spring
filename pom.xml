@@ -32,7 +32,7 @@
         <hibernate-validator.version>6.0.9.Final</hibernate-validator.version>
 
         <!--Tools-->
-        <ehcache.version>3.5.2</ehcache.version>
+        <ehcache.version>2.10.5</ehcache.version>
 
     </properties>
 
@@ -122,9 +122,15 @@
 
         <!--Cache-->
         <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
+            <groupId>net.sf.ehcache.internal</groupId>
+            <artifactId>ehcache-core</artifactId>
             <version>${ehcache.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Test -->
