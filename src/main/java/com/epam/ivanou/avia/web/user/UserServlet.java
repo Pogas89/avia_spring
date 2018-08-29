@@ -25,7 +25,6 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserService userService = webAppCtx.getBean(UserService.class);
         req.setAttribute("userList",userService.getAll());
-//        resp.sendRedirect("userList.jsp");
         req.getRequestDispatcher("/userList.jsp").forward(req,resp);
     }
 }

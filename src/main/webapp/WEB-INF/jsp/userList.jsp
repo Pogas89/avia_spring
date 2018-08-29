@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>User list</title>
-    <link rel="stylesheet" href="resourses/css/style.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
     <h2>User list</h2>
